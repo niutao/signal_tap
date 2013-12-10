@@ -14,10 +14,15 @@ TEMPLATE = app
 
 SOURCES += \
 	src/main.cpp\
-        src/signaltap.cpp
+        src/signaltap.cpp \
+    src/MenuEdit.cpp \
+    src/MenuFile.cpp
 
 HEADERS  += \
-	src/signaltap.h
+	src/signaltap.h \
+    src/MenuEdit.h \
+    src/MenuFile.h \
+    Debug/ui_signaltap.h
 
 FORMS    += signaltap.ui
 

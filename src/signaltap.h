@@ -2,10 +2,13 @@
 #define SIGNALTAP_H
 
 #include <QMainWindow>
+#include "MenuFile.h"
+#include "ui_signaltap.h"
 
 namespace Ui {
 class SignalTap;
 }
+
 
 class SignalTap : public QMainWindow
 {
@@ -15,8 +18,10 @@ public:
     explicit SignalTap(QWidget *parent = 0);
     ~SignalTap();
 
-private:
+public:
     Ui::SignalTap *ui;
+    MenuFile *menuFile;
+
 };
 
 #endif // SIGNALTAP_H

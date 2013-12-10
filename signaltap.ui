@@ -153,63 +153,63 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionNew"/>
-    <addaction name="actionOpen"/>
-    <addaction name="actionSave"/>
+    <addaction name="actionFileNew"/>
+    <addaction name="actionFileOpen"/>
+    <addaction name="actionFileSave"/>
     <addaction name="separator"/>
-    <addaction name="actionExportAsBIN"/>
-    <addaction name="actionExportAsWLF"/>
+    <addaction name="actionFileExportAsBIN"/>
+    <addaction name="actionFileExportAsWLF"/>
     <addaction name="separator"/>
-    <addaction name="actionPrint"/>
-    <addaction name="actionPrintSetup"/>
+    <addaction name="actionFilePrint"/>
+    <addaction name="actionFilePrintSetup"/>
     <addaction name="separator"/>
-    <addaction name="actionExit"/>
+    <addaction name="actionFileExit"/>
    </widget>
    <widget class="QMenu" name="menuCapture">
     <property name="title">
      <string>&amp;Capture</string>
     </property>
-    <addaction name="actionStart"/>
-    <addaction name="actionStop"/>
-    <addaction name="actionStartWithTime"/>
+    <addaction name="actionCaptureStart"/>
+    <addaction name="actionCaptureStop"/>
+    <addaction name="actionCaptureStartWithTime"/>
     <addaction name="separator"/>
-    <addaction name="actionSetup"/>
-    <addaction name="actionSampling"/>
-    <addaction name="actionTrigger"/>
+    <addaction name="actionCaptureSetup"/>
+    <addaction name="actionCaptureSampling"/>
+    <addaction name="actionCaptureTrigger"/>
    </widget>
    <widget class="QMenu" name="menuReplay">
     <property name="title">
      <string>&amp;Replay</string>
     </property>
-    <addaction name="actionReplay"/>
-    <addaction name="actionReplayFromFile"/>
+    <addaction name="actionReplayReplay"/>
+    <addaction name="actionReplayReplayFromFile"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="actionZoom_In"/>
-    <addaction name="actionZoom_Out"/>
-    <addaction name="actionClear"/>
+    <addaction name="actionEditZoomIn"/>
+    <addaction name="actionEditZoomOut"/>
+    <addaction name="actionEditClear"/>
     <addaction name="separator"/>
-    <addaction name="actionOptions"/>
+    <addaction name="actionEditOptions"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>&amp;View</string>
     </property>
-    <addaction name="actionToolBar"/>
-    <addaction name="actionStatusBar"/>
-    <addaction name="actionAuto_Mensure"/>
+    <addaction name="actionViewToolBar"/>
+    <addaction name="actionViewStatusBar"/>
+    <addaction name="actionViewAutoMensure"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="actionHelpTopic"/>
-    <addaction name="actionUpdateCheck"/>
+    <addaction name="actionHelpHelpTopic"/>
+    <addaction name="actionHelpUpdateCheck"/>
     <addaction name="separator"/>
-    <addaction name="actionAbout_SignalTap"/>
+    <addaction name="actionHelpAboutSignalTap"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -246,7 +246,7 @@
    <addaction name="actionToolBarNew"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionNew">
+  <action name="actionFileNew">
    <property name="icon">
     <iconset resource="signal_tap.qrc">
      <normaloff>:/res/images/new.png</normaloff>:/res/images/new.png</iconset>
@@ -255,97 +255,97 @@
     <string>New</string>
    </property>
   </action>
-  <action name="actionOpen">
+  <action name="actionFileOpen">
    <property name="text">
     <string>Open...</string>
    </property>
   </action>
-  <action name="actionSave">
+  <action name="actionFileSave">
    <property name="text">
     <string>Save</string>
    </property>
   </action>
-  <action name="actionExportAsBIN">
+  <action name="actionFileExportAsBIN">
    <property name="text">
     <string>Export as binrary...</string>
    </property>
   </action>
-  <action name="actionExportAsWLF">
+  <action name="actionFileExportAsWLF">
    <property name="text">
     <string>Export as WLF file...</string>
    </property>
   </action>
-  <action name="actionPrint">
+  <action name="actionFilePrint">
    <property name="text">
     <string>Print</string>
    </property>
   </action>
-  <action name="actionPrintSetup">
+  <action name="actionFilePrintSetup">
    <property name="text">
     <string>Print Setup...</string>
    </property>
   </action>
-  <action name="actionExit">
+  <action name="actionFileExit">
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionClear">
+  <action name="actionEditClear">
    <property name="text">
     <string>Clear</string>
    </property>
   </action>
-  <action name="actionOptions">
+  <action name="actionEditOptions">
    <property name="text">
     <string>Options...</string>
    </property>
   </action>
-  <action name="actionHelpTopic">
+  <action name="actionHelpHelpTopic">
    <property name="text">
     <string>Help Topic...</string>
    </property>
   </action>
-  <action name="actionUpdateCheck">
+  <action name="actionHelpUpdateCheck">
    <property name="text">
     <string>Update Check...</string>
    </property>
   </action>
-  <action name="actionAbout_SignalTap">
+  <action name="actionHelpAboutSignalTap">
    <property name="text">
     <string>About SignalTap</string>
    </property>
   </action>
-  <action name="actionStart">
+  <action name="actionCaptureStart">
    <property name="text">
     <string>Start</string>
    </property>
   </action>
-  <action name="actionStop">
+  <action name="actionCaptureStop">
    <property name="text">
     <string>Stop</string>
    </property>
   </action>
-  <action name="actionStartWithTime">
+  <action name="actionCaptureStartWithTime">
    <property name="text">
     <string>Start With Time...</string>
    </property>
   </action>
-  <action name="actionSetup">
+  <action name="actionCaptureSetup">
    <property name="text">
     <string>Setup...</string>
    </property>
   </action>
-  <action name="actionSampling">
+  <action name="actionCaptureSampling">
    <property name="text">
     <string>Sampling...</string>
    </property>
   </action>
-  <action name="actionTrigger">
+  <action name="actionCaptureTrigger">
    <property name="text">
     <string>Trigger...</string>
    </property>
   </action>
-  <action name="actionReplay">
+  <action name="actionReplayReplay">
    <property name="text">
     <string>Replay</string>
    </property>
@@ -353,12 +353,12 @@
     <string>Replay current wave</string>
    </property>
   </action>
-  <action name="actionReplayFromFile">
+  <action name="actionReplayReplayFromFile">
    <property name="text">
     <string>Replay from file...</string>
    </property>
   </action>
-  <action name="actionToolBar">
+  <action name="actionViewToolBar">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -366,7 +366,7 @@
     <string>ToolBar</string>
    </property>
   </action>
-  <action name="actionStatusBar">
+  <action name="actionViewStatusBar">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -374,17 +374,17 @@
     <string>StatusBar</string>
    </property>
   </action>
-  <action name="actionZoom_In">
+  <action name="actionEditZoomIn">
    <property name="text">
     <string>Zoom In</string>
    </property>
   </action>
-  <action name="actionZoom_Out">
+  <action name="actionEditZoomOut">
    <property name="text">
     <string>Zoom Out</string>
    </property>
   </action>
-  <action name="actionAuto_Mensure">
+  <action name="actionViewAutoMensure">
    <property name="checkable">
     <bool>true</bool>
    </property>
