@@ -1,15 +1,15 @@
 #include "WaveView.h"
 #include "signaltap.h"
-#include "Error.h"
+#include <errno.h>
 #include "WaveTimeLine.h"
 #include <QGraphicsItem>
+#include "GraphicsView.h"
 
-
-WaveView::WaveView(QGraphicsView *GraphicsView):
-    //QGraphicsScene(GraphicsView->width() / 2, GraphicsView->height() / 2, GraphicsView->width(), GraphicsView->height(), GraphicsView)
-    QGraphicsScene(GraphicsView)
+WaveView::WaveView(GraphicsView *parent):
+    QGraphicsScene(parent)
 {
-    mGraphicsView = GraphicsView;
+    qDebug("parent(%d, %d)\n", parent->width(), parent->height());
+    mGraphicsView = parent;
 
     mGraphicsView->setScene(this);
 
@@ -20,6 +20,7 @@ WaveView::WaveView(QGraphicsView *GraphicsView):
     setPenStyle(Wave, Qt::green, Qt::SolidLine, 1);
 
     setPenStyle(Move, Qt::magenta, Qt::DashLine, 1);
+
 }
 
 void WaveView::setPenStyle(WaveView::Pen pen, QColor color, Qt::PenStyle style, qreal width)
@@ -27,7 +28,7 @@ void WaveView::setPenStyle(WaveView::Pen pen, QColor color, Qt::PenStyle style, 
     QPen *qpen;
 
     if (pen < 0 || pen >= MAX)
-        throw Error::EPERM;
+        throw -EINVAL;
 
     qpen = &mPens[pen];
 
@@ -103,19 +104,19 @@ void WaveView::drawTest()
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
-    //mGraphicsView->scale(0.2, 0.2);
-    //addLine(Move, 0, 0, 200, 0);
-    //addLine(Move, 0, -100, 0, 200);
+
+
     mTimeLine->setPen(mPens[Move]);
-    mTimeLine->setLine(100, 0, 100, 200);
-
-
+    mTimeLine->setLine(100, 0, 100, this->width());
 
     addItem(mTimeLine);
 
-    //scale->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    QPointF point = mTimeLine->mapToScene(QPointF(100, 0));
+    //QPointF point = mTimeLine->mapTo(QPointF(100, 0));
 
-    //QGraphicsItem *item = new QGraphicsItem;
-    //item.setFlag(QGraphicsItem::ItemIsMovable, true);
-    qDebug("%d, %d\n",this->width(), this->height());
+    qDebug("Point(%f, %f)\n",point.x(), point.y());
+    qDebug("%f, %f\n",this->width(), this->height());
+    qDebug("View(%d, %d)\n", mGraphicsView->width(), mGraphicsView->height());
 }
+
+

@@ -7,16 +7,17 @@
 #include <QColor>
 
 class WaveTimeLine;
+class GraphicsView;
 
 class WaveView : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    WaveView(QGraphicsView *GraphicsView);
+    WaveView(GraphicsView *parent);
     enum Pen{TimeLine = 0, Scale, Move, Wave, MAX};
 
 private:
-    QGraphicsView *mGraphicsView;
+    GraphicsView *mGraphicsView;
 
     QPen mPens[MAX];
 

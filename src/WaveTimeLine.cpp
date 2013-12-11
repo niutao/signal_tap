@@ -25,6 +25,7 @@ void WaveTimeLine::setLine(qreal x1, qreal y1, qreal x2, qreal y2)
 
 void WaveTimeLine::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event);
     qDebug("%s\n", "mousePressEvent");
 }
 
@@ -37,12 +38,6 @@ void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     QPointF offset;
     QLineF line;
 
-/*
-    if (mLastPos.x() == 0.0 && mLastPos.y() == 0.0) {
-        mLastPos = current;
-        return;
-    }*/
-
     offset = current - mLastPos;
 
 
@@ -50,7 +45,7 @@ void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
            current.x(), current.y());
     if (fabs(offset.x()) >= 19.0) {
     qDebug("offsetx = %f\n", offset.x());
-        moveBy(offset.x(), 0);
+        moveBy(offset.x() + 1, 0);
         line = this->line();
         mLastPos.setX(line.x1());
         mLastPos.setY(line.y1());
@@ -62,6 +57,7 @@ void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void WaveTimeLine::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event);
     qDebug("%s\n", "mouseReleaseEvent");
 }
 
@@ -81,7 +77,7 @@ void WaveTimeLine::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     //mCursor->setShape(Qt::SplitHCursor);
     //setCursor(*mCursor);
     QPointF point = event->screenPos();
-    qDebug("Point(%d, %d)\n", point.x(), point.y());
+    qDebug("Point(%f, %f)\n", point.x(), point.y());
     //mCursor->setPos(point.x() + 2, point.y());
 }
 

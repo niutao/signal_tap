@@ -18,7 +18,8 @@ SOURCES += \
     src/MenuEdit.cpp \
     src/MenuFile.cpp \
     src/WaveView.cpp \
-    src/WaveTimeLine.cpp
+    src/WaveTimeLine.cpp \
+    src/GraphicsView.cpp
 
 HEADERS  += \
 	src/signaltap.h \
@@ -26,8 +27,8 @@ HEADERS  += \
     src/MenuFile.h \
     Debug/ui_signaltap.h \
     src/WaveView.h \
-    src/Error.h \
-    src/WaveTimeLine.h
+    src/WaveTimeLine.h \
+    src/GraphicsView.h
 
 FORMS    += signaltap.ui
 

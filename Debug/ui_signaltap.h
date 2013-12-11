@@ -25,6 +25,7 @@
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
 
+class GraphicsView;
 QT_BEGIN_NAMESPACE
 
 class Ui_SignalTap
@@ -196,7 +197,7 @@ public:
 
         horizontalLayout->addWidget(signalView);
 
-        waveView = new QGraphicsView(tab);
+        waveView = new GraphicsView();//new QGraphicsView(tab);
         waveView->setObjectName(QStringLiteral("waveView"));
         waveView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         QBrush brush(QColor(0, 0, 0, 255));
