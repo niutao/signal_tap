@@ -1,18 +1,23 @@
 #include "signaltap.h"
-#include "ui_signaltap.h"
-#include "MenuFile.h"
 #include <stdio.h>
 
 SignalTap::SignalTap(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SignalTap)
 {
+    //showMaximized();
     ui->setupUi(this);
-    menuFile = new MenuFile(this);
 
+
+    mMenuFile = new MenuFile(this);
+    mWaveView = new WaveView(ui->waveView);
+
+    mWaveView->drawTest();
 }
 
 SignalTap::~SignalTap()
 {
+    delete mWaveView;
+    delete mMenuFile;
     delete ui;
 }

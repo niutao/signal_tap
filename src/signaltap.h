@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "MenuFile.h"
 #include "ui_signaltap.h"
+#include "WaveView.h"
 
 namespace Ui {
 class SignalTap;
@@ -20,7 +21,8 @@ public:
 
 public:
     Ui::SignalTap *ui;
-    MenuFile *menuFile;
+    MenuFile *mMenuFile;
+    WaveView *mWaveView;
 
 };
 
