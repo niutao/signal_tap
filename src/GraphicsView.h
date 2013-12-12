@@ -13,8 +13,11 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 public:
-
+    int getWidth();
+    int getHeight();
 private:
+    int mWidth;
+    int mHeight;
 };
 
 #endif // GRAPHICSVIEW_H

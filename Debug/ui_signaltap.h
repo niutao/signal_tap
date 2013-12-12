@@ -25,7 +25,6 @@
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
 
-class GraphicsView;
 QT_BEGIN_NAMESPACE
 
 class Ui_SignalTap
@@ -87,11 +86,14 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(SignalTap->sizePolicy().hasHeightForWidth());
         SignalTap->setSizePolicy(sizePolicy);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/res/images/logo.png"), QSize(), QIcon::Normal, QIcon::Off);
+        SignalTap->setWindowIcon(icon);
         actionFileNew = new QAction(SignalTap);
         actionFileNew->setObjectName(QStringLiteral("actionFileNew"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/res/images/new.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionFileNew->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/res/images/new.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionFileNew->setIcon(icon1);
         actionFileOpen = new QAction(SignalTap);
         actionFileOpen->setObjectName(QStringLiteral("actionFileOpen"));
         actionFileSave = new QAction(SignalTap);
@@ -147,12 +149,12 @@ public:
         actionViewAutoMensure->setCheckable(true);
         actionToolBarNew = new QAction(SignalTap);
         actionToolBarNew->setObjectName(QStringLiteral("actionToolBarNew"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/res/images/new.png"), QSize(), QIcon::Normal, QIcon::Off);
-        icon1.addFile(QStringLiteral("res/images/new.png"), QSize(), QIcon::Normal, QIcon::On);
-        icon1.addFile(QStringLiteral("res/images/new.png"), QSize(), QIcon::Active, QIcon::Off);
-        icon1.addFile(QStringLiteral("res/images/new.png"), QSize(), QIcon::Active, QIcon::On);
-        actionToolBarNew->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/res/images/new.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QStringLiteral("res/images/new.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon2.addFile(QStringLiteral("res/images/new.png"), QSize(), QIcon::Active, QIcon::Off);
+        icon2.addFile(QStringLiteral("res/images/new.png"), QSize(), QIcon::Active, QIcon::On);
+        actionToolBarNew->setIcon(icon2);
         actionToolBarNew->setAutoRepeat(true);
         actionToolBarNew->setIconVisibleInMenu(true);
         widget = new QWidget(SignalTap);
@@ -196,19 +198,6 @@ public:
         signalView->setBaseSize(QSize(0, 0));
 
         horizontalLayout->addWidget(signalView);
-
-        waveView = new GraphicsView();//new QGraphicsView(tab);
-        waveView->setObjectName(QStringLiteral("waveView"));
-        waveView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        QBrush brush(QColor(0, 0, 0, 255));
-        brush.setStyle(Qt::NoBrush);
-        waveView->setBackgroundBrush(brush);
-        QBrush brush1(QColor(0, 0, 0, 255));
-        brush1.setStyle(Qt::NoBrush);
-        waveView->setForegroundBrush(brush1);
-
-        horizontalLayout->addWidget(waveView);
-
 
         horizontalLayout_4->addLayout(horizontalLayout);
 

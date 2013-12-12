@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>SignalTap</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="signal_tap.qrc">
+    <normaloff>:/res/images/logo.png</normaloff>:/res/images/logo.png</iconset>
+  </property>
   <widget class="QWidget" name="widget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">

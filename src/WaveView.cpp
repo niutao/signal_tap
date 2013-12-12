@@ -4,16 +4,16 @@
 #include "WaveTimeLine.h"
 #include <QGraphicsItem>
 #include "GraphicsView.h"
+#include <QScrollBar>
 
 WaveView::WaveView(GraphicsView *parent):
     QGraphicsScene(parent)
 {
-    qDebug("parent(%d, %d)\n", parent->width(), parent->height());
     mGraphicsView = parent;
 
     mGraphicsView->setScene(this);
 
-    mTimeLine = new WaveTimeLine();
+    mTimeLine = new WaveTimeLine(this);
 
     setBackgroundBrush(Qt::black);
 
@@ -93,30 +93,39 @@ void WaveView::drawNegedge(qreal x, qreal y, qreal height, qreal width, qreal co
 }
 void WaveView::drawTest()
 {
-    qreal height = 50;
-    qreal width = 20;
+    qreal width, height;
     qreal x, y;
 
     x = 0;
-    y = 100;
+    y = 25;
+    width = 10;
+    height = 20;
 
     for (int i = 0; i < 1000; i += 2) {
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
 
+    x = 0;
+    y = 55;
+    width = 40;
+    height = 20;
+
+    for (int i = 0; i < 1000; i += 2) {
+        drawPosedge(x + width * i, y, height, width, 1);
+        drawNegedge(x + width * (i + 1), y - height, height, width, 1);
+    }
 
     mTimeLine->setPen(mPens[Move]);
     mTimeLine->setLine(100, 0, 100, this->width());
 
     addItem(mTimeLine);
 
-    QPointF point = mTimeLine->mapToScene(QPointF(100, 0));
-    //QPointF point = mTimeLine->mapTo(QPointF(100, 0));
+    QScrollBar *bar = mGraphicsView->horizontalScrollBar();
 
-    qDebug("Point(%f, %f)\n",point.x(), point.y());
-    qDebug("%f, %f\n",this->width(), this->height());
-    qDebug("View(%d, %d)\n", mGraphicsView->width(), mGraphicsView->height());
+    //bar->setSliderPosition(40);
+    qDebug("bar(%d, %d, %d, %d)\n", bar->minimum(),
+           bar->maximum(), bar->singleStep(), bar->sliderPosition());
 }
 
 

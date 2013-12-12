@@ -7,11 +7,13 @@
 #include <QStyleOptionGraphicsItem>
 #include <QCursor>
 
+class WaveView;
+
 class WaveTimeLine : public QObject, public QGraphicsLineItem
 {
     Q_OBJECT
 public:
-    WaveTimeLine();
+    WaveTimeLine(WaveView *waveview);
     void setLine(qreal x1, qreal y1, qreal x2, qreal y2);
 
 protected:
@@ -29,6 +31,7 @@ public slots:
 private:
     QCursor* mCursor;
     QPointF mLastPos;
+    WaveView *mWaveView;
 };
 
 #endif // WAVETIMELINE_H
