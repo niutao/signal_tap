@@ -13,7 +13,7 @@ class WaveView : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    WaveView(GraphicsView *parent);
+    WaveView(QObject *parent);
     enum Pen{TimeLine = 0, Scale, Move, Wave, MAX};
     GraphicsView *mGraphicsView;
 

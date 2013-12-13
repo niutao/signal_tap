@@ -6,10 +6,16 @@
 #include "GraphicsView.h"
 #include <QScrollBar>
 
-WaveView::WaveView(GraphicsView *parent):
+WaveView::WaveView(QObject *parent):
     QGraphicsScene(parent)
 {
-    mGraphicsView = parent;
+    mGraphicsView = new GraphicsView();
+
+    mGraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    //waveView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    QBrush brush(QColor(0, 0, 0, 255));
+    brush.setStyle(Qt::NoBrush);
+    mGraphicsView->setBackgroundBrush(brush);
 
     mGraphicsView->setScene(this);
 
@@ -98,11 +104,18 @@ void WaveView::drawTest()
     width = 10;
     height = 20;
 
-    for (int i = 0; i < 500; i += 2) {
+    for (int i = 0; i < 100000; i += 2) {
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
 
+
+    /*
+    for (int i = 0; i < 10000; i += 2) {
+        drawPosedge(x + width * i, y, height, width, 1);
+        drawNegedge(x + width * (i + 1), y - height, height, width, 1);
+    }
+    */
     x = 0;
     y = 55;
     width = 40;
@@ -112,6 +125,24 @@ void WaveView::drawTest()
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
+#if 0
+    QList<QGraphicsItem *> list;
+    list = this->items(0, 0, 50000, mGraphicsView->height(), Qt::IntersectsItemShape, Qt::AscendingOrder);
+    qDebug("list.count = %d\n", list.count());
+    foreach (QGraphicsItem *item, list) {
+        this->removeItem(item);
+    }
+#endif
+    x = 50000 * 10;
+    y = 25;
+    width = 10;
+    height = 20;
+
+    for (int i = 0; i < 50000; i += 2) {
+        drawPosedge(x + width * i, y, height, width, 1);
+        drawNegedge(x + width * (i + 1), y - height, height, width, 1);
+    }
+
 
     mTimeLine->setPen(mPens[Move]);
     mTimeLine->setLine(100, 0, 100, this->width());
