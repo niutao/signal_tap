@@ -51,7 +51,7 @@ void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     qDebug("POS2(%f, %f, %f, %f, %f, %f)", mWaveView->width(), this->line().x1(), timeLineCurrentPos,
            (qreal)bar->sliderPosition(), this->pos().x(), current.x());
 
-    if (timeLineCurrentPos < mWaveView->width()) {
+    if (timeLineCurrentPos < mWaveView->width() && timeLineCurrentPos > 0) {
         moveBy(current.x() - this->line().x1() + mScrollBarOffset, 0);
     }
 

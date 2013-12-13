@@ -8,7 +8,7 @@ SignalTap::SignalTap(QWidget *parent) :
 {
     ui->setupUi(this);
     GraphicsView *waveView;
-    //showMaximized();
+    showMaximized();
     waveView = new GraphicsView();
     waveView->setObjectName(QStringLiteral("waveView"));
     waveView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);

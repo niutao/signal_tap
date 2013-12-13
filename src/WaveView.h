@@ -18,9 +18,7 @@ public:
     GraphicsView *mGraphicsView;
 
 private:
-
     QPen mPens[MAX];
-
     WaveTimeLine *mTimeLine;
 
 public:
