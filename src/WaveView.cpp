@@ -18,12 +18,11 @@ WaveView::WaveView(GraphicsView *parent):
     setBackgroundBrush(Qt::black);
 
     setPenStyle(Wave, Qt::green, Qt::SolidLine, 1);
-
     setPenStyle(Move, Qt::magenta, Qt::DashLine, 1);
-
 }
 
-void WaveView::setPenStyle(WaveView::Pen pen, QColor color, Qt::PenStyle style, qreal width)
+void WaveView::setPenStyle(WaveView::Pen pen, QColor color,
+                           Qt::PenStyle style, qreal width)
 {
     QPen *qpen;
 
@@ -64,7 +63,6 @@ void WaveView::drawPosedge(qreal x, qreal y, qreal height, qreal width, qreal co
 
         addLine(Wave, x2, yy, xx, yy);
     }
-
 }
 
 void WaveView::drawNegedge(qreal x, qreal y, qreal height, qreal width, qreal count)
@@ -89,7 +87,6 @@ void WaveView::drawNegedge(qreal x, qreal y, qreal height, qreal width, qreal co
 
         addLine(Wave, x2, yy, xx, yy);
     }
-
 }
 void WaveView::drawTest()
 {
@@ -101,7 +98,7 @@ void WaveView::drawTest()
     width = 10;
     height = 20;
 
-    for (int i = 0; i < 1000; i += 2) {
+    for (int i = 0; i < 500; i += 2) {
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
@@ -111,7 +108,7 @@ void WaveView::drawTest()
     width = 40;
     height = 20;
 
-    for (int i = 0; i < 1000; i += 2) {
+    for (int i = 0; i < 500; i += 2) {
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
@@ -120,12 +117,6 @@ void WaveView::drawTest()
     mTimeLine->setLine(100, 0, 100, this->width());
 
     addItem(mTimeLine);
-
-    QScrollBar *bar = mGraphicsView->horizontalScrollBar();
-
-    //bar->setSliderPosition(40);
-    qDebug("bar(%d, %d, %d, %d)\n", bar->minimum(),
-           bar->maximum(), bar->singleStep(), bar->sliderPosition());
 }
 
 

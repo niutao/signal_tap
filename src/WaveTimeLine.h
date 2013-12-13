@@ -30,8 +30,10 @@ public slots:
 
 private:
     QCursor* mCursor;
-    QPointF mLastPos;
     WaveView *mWaveView;
+
+    int mLastScrollBarPos;
+    int mScrollBarOffset;
 };
 
 #endif // WAVETIMELINE_H

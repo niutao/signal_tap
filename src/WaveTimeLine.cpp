@@ -1,3 +1,4 @@
+#define QT_NO_DEBUG_OUTPUT
 #include "WaveTimeLine.h"
 #include "WaveView.h"
 #include "GraphicsView.h"
@@ -13,18 +14,14 @@ WaveTimeLine::WaveTimeLine(WaveView *waveview)
     setAcceptDrops(true);
     setZValue(0);
 
-    mLastPos.setX(0);
-    mLastPos.setY(0);
-
     mWaveView = waveview;
+
+    mLastScrollBarPos = mWaveView->mGraphicsView->horizontalScrollBar()->sliderPosition();
+    mScrollBarOffset = 0;
 
 }
 void WaveTimeLine::setLine(qreal x1, qreal y1, qreal x2, qreal y2)
 {
-
-    this->mLastPos.setX(x1);
-    this->mLastPos.setY(y1);
-
     QGraphicsLineItem::setLine(x1, y1, x2, y2);
 }
 
@@ -33,47 +30,32 @@ void WaveTimeLine::mousePressEvent(QGraphicsSceneMouseEvent *event)
     Q_UNUSED(event);
     qDebug("%s\n", "mousePressEvent");
 }
-int a = 0;
+
 void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF current = event->pos();
-    QPointF offset;
-    QLineF line;
-    qreal windowRightPos, timeLineCurrentPos;
+    qreal timeLineCurrentPos;
     QScrollBar *bar = mWaveView->mGraphicsView->horizontalScrollBar();
-    offset = current - mLastPos;
 
-    windowRightPos = (qreal)mWaveView->mGraphicsView->getWidth();
-    timeLineCurrentPos = this->line().x1() + this->pos().x() - bar->sliderPosition();
+    mWaveView->mGraphicsView->ensureVisible(this, 100, 0);
+    if (mLastScrollBarPos != bar->sliderPosition()) {
+        update();
+        QGraphicsLineItem::mouseMoveEvent(event);
 
-
-
-    qDebug("POS(%f, %f, %f, %f, %d)", windowRightPos, timeLineCurrentPos,
-           this->line().x1(), this->pos().x(), bar->sliderPosition());
-
-    // the time line will approach the right border
-    if (timeLineCurrentPos + 100.0 >= windowRightPos) {
-#if 1
-        int wantPos = bar->sliderPosition() + 100;
-        if (wantPos <= bar->maximum() * bar->singleStep()) {
-            if (a++ < 200)
-                bar->setSliderPosition(wantPos);
-        }
-#endif
-        //mWaveView->mGraphicsView->centerOn((timeLineCurrentPos + 100)/ 2, mWaveView->height() / 2);
+        mScrollBarOffset = bar->sliderPosition() - mLastScrollBarPos;
+        mLastScrollBarPos = bar->sliderPosition();
+        return;
     }
 
+    timeLineCurrentPos = this->pos().x() + current.x() + mScrollBarOffset;
+    qDebug("POS2(%f, %f, %f, %f, %f, %f)", mWaveView->width(), this->line().x1(), timeLineCurrentPos,
+           (qreal)bar->sliderPosition(), this->pos().x(), current.x());
 
-    //qDebug("(%f, %f), (%f, %f)\n", mLastPos.x(), mLastPos.y(),
-      //     current.x(), current.y());
-    if (fabs(offset.x()) >= 19.0) {
-        //qDebug("offsetx = %f\n", offset.x());
-        moveBy(offset.x() + 1, 0);
-        line = this->line();
-        mLastPos.setX(line.x1());
-        mLastPos.setY(line.y1());
-
+    if (timeLineCurrentPos < mWaveView->width()) {
+        moveBy(current.x() - this->line().x1() + mScrollBarOffset, 0);
     }
+
+    mScrollBarOffset = 0;
 
     update();
     QGraphicsLineItem::mouseMoveEvent(event);
@@ -83,13 +65,15 @@ void WaveTimeLine::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
     qDebug("%s\n", "mouseReleaseEvent");
+    update();
+    QGraphicsLineItem::mouseReleaseEvent(event);
 }
 
 void WaveTimeLine::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     qDebug("%s\n", "hoverEnterEvent");
     mCursor->setShape(Qt::SplitHCursor);
-    setCursor(*mCursor);
+    this->setCursor(*mCursor);
 
     update();
     QGraphicsLineItem::hoverEnterEvent(event);
@@ -97,12 +81,12 @@ void WaveTimeLine::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 
 void WaveTimeLine::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
+    Q_UNUSED(event);
     qDebug("%s\n", "hoverMoveEvent");
-    //mCursor->setShape(Qt::SplitHCursor);
-    //setCursor(*mCursor);
-    QPointF point = event->screenPos();
-    qDebug("Point(%f, %f)\n", point.x(), point.y());
-    //mCursor->setPos(point.x() + 2, point.y());
+    mCursor->setShape(Qt::SplitHCursor);
+    this->setCursor(*mCursor);
+    update();
+    QGraphicsLineItem::hoverMoveEvent(event);
 }
 
 void WaveTimeLine::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
