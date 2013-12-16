@@ -8,36 +8,35 @@
 #include <QHBoxLayout>
 #include <QTreeView>
 #include <QtWidgets>
+#include <QGraphicsView>
 
-class WaveTimeLine;
-class GraphicsView;
+class WaveShow;
 
-class WaveView : public QGraphicsScene
+class WaveView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    WaveView(QObject *parent);
-    enum Pen{TimeLine = 0, Scale, Move, Wave, MAX};
-    GraphicsView *mGraphicsView;
-
-private:
-    QPen mPens[MAX];
-    WaveTimeLine *mTimeLine;
-
-private:
+    WaveView(QWidget *parent);
+    ~WaveView();
     QWidget *mTab;
+    WaveShow *mWaveShow;
+
+    //private fileds for ui
+private:
     QHBoxLayout *mHL;
     QTreeView *mSignalView;
+
+    int mWidth;
+    int mHeight;
     void setupUi();
+    void desetupUi();
+    void retranslateUi();
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 public:
-    /** set the style of each pen */
-    void setPenStyle(Pen pen, QColor color, Qt::PenStyle style, qreal width);
-
-    QGraphicsLineItem *addLine(Pen pen, qreal x1, qreal y1, qreal x2, qreal y2);
-    void drawTest();
-    void drawPosedge(qreal x, qreal y, qreal height, qreal width, qreal count);
-    void drawNegedge(qreal x, qreal y, qreal height, qreal width, qreal count);
+    int getWidth();
+    int getHeight();
 
 signals:
 

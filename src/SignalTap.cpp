@@ -1,10 +1,10 @@
 #include "SignalTap.h"
 #include <stdio.h>
-#include "GraphicsView.h"
 #include "WaveView.h"
 #include "MenuBar.h"
 #include "ToolBar.h"
 #include "StatusBar.h"
+#include "WaveShow.h"
 #include <QSizePolicy>
 
 SignalTap::SignalTap(QWidget *parent) :
@@ -13,17 +13,12 @@ SignalTap::SignalTap(QWidget *parent) :
     setupUi();
     retranslateUi();
 
-    //mWaveView = new WaveView(parent);
-
-    //ui->horizontalLayout->addWidget(mWaveView->mGraphicsView);
-    //mWaveView->drawTest();
+    test();
 }
 
 SignalTap::~SignalTap()
 {
     desetupUi();
-
-    //delete mWaveView;
 }
 
 void SignalTap::setupUi()
@@ -38,7 +33,8 @@ void SignalTap::setupUi()
 
     // set the logo of software
     QIcon icon;
-    icon.addFile(QStringLiteral(":/res/images/logo.png"), QSize(), QIcon::Normal, QIcon::Off);
+    icon.addFile(QStringLiteral(":/res/images/logo.png"),
+                 QSize(), QIcon::Normal, QIcon::Off);
     setWindowIcon(icon);
 
     // create the menu bar
@@ -64,12 +60,15 @@ void SignalTap::setupUi()
     mTopHL->setContentsMargins(11, 11, 11, 11);
     mTopHL->setContentsMargins(0, 0, 0, 0);
 
+    // create the tabl widget
     mTopTab = new QTabWidget(mTopWidget);
     mTopHL->addWidget(mTopTab);
 
+    // create the status bar
     mStatusBar = new StatusBar(this);
     setStatusBar(mStatusBar);
 
+    mWaveViewList.clear();
 }
 
 void SignalTap::retranslateUi()
@@ -79,10 +78,29 @@ void SignalTap::retranslateUi()
 
 void SignalTap::desetupUi()
 {
+    delete mStatusBar;
+    delete mTopTab;
+    delete mTopHL;
+    delete mTopWidget;
+    delete mToolBar;
     delete mMenuBar;
 }
 
 bool SignalTap::addWaveView()
 {
+    return true;
+}
 
+void SignalTap::test()
+{
+    WaveView *test;
+
+    test = new WaveView(this);
+    mTopTab->addTab(test->mTab, "test");
+    mWaveViewList.append(test);
+
+    test = new WaveView(this);
+    mTopTab->addTab(test->mTab, "test1");
+    mWaveViewList.append(test);
+    test->mWaveShow->drawTest();
 }

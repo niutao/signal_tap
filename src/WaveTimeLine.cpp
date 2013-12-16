@@ -1,12 +1,12 @@
 //#define QT_NO_DEBUG_OUTPUT
 #include "WaveTimeLine.h"
 #include "WaveView.h"
-#include "GraphicsView.h"
+#include "WaveShow.h"
 #include <math.h>
 #include <QPainter>
 #include <QScrollBar>
 
-WaveTimeLine::WaveTimeLine(WaveView *waveview)
+WaveTimeLine::WaveTimeLine(WaveShow *waveshow)
 {
     mCursor = new QCursor;
 
@@ -14,9 +14,9 @@ WaveTimeLine::WaveTimeLine(WaveView *waveview)
     setAcceptDrops(true);
     setZValue(0);
 
-    mWaveView = waveview;
+    mWaveShow = waveshow;
 
-    mLastScrollBarPos = mWaveView->mGraphicsView->horizontalScrollBar()->sliderPosition();
+    mLastScrollBarPos = mWaveShow->mParent->horizontalScrollBar()->sliderPosition();
     mScrollBarOffset = 0;
 
 }
@@ -35,9 +35,9 @@ void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF current = event->pos();
     qreal timeLineCurrentPos;
-    QScrollBar *bar = mWaveView->mGraphicsView->horizontalScrollBar();
+    QScrollBar *bar = mWaveShow->mParent->horizontalScrollBar();
 
-    mWaveView->mGraphicsView->ensureVisible(this, 100, 0);
+    mWaveShow->mParent->ensureVisible(this, 100, 0);
     if (mLastScrollBarPos != bar->sliderPosition()) {
         update();
         QGraphicsLineItem::mouseMoveEvent(event);
@@ -48,10 +48,10 @@ void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 
     timeLineCurrentPos = this->pos().x() + current.x() + mScrollBarOffset;
-    qDebug("POS2(%f, %f, %f, %f, %f, %f)", mWaveView->width(), this->line().x1(), timeLineCurrentPos,
+    qDebug("POS2(%f, %f, %f, %f, %f, %f)", mWaveShow->mParent->width(), this->line().x1(), timeLineCurrentPos,
            (qreal)bar->sliderPosition(), this->pos().x(), current.x());
 
-    if (timeLineCurrentPos < mWaveView->width() && timeLineCurrentPos > 0) {
+    if (timeLineCurrentPos < mWaveShow->mParent->width() && timeLineCurrentPos > 0) {
         moveBy(current.x() - this->line().x1() + mScrollBarOffset, 0);
     }
 

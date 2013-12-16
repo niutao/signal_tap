@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QtWidgets>
 #include <QTableWidget>
+#include <QList>
 #include "WaveView.h"
 
 #define SIGNALTAP_CONTEXT "SignalTap"
@@ -16,14 +17,13 @@ class StatusBar;
 class SignalTap : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit SignalTap(QWidget *parent = 0);
     ~SignalTap();
     bool addWaveView();
 
 public:
-    WaveView *mWaveView;
+    QList <WaveView *> mWaveViewList;
 
 private:
     MenuBar *mMenuBar;
@@ -36,6 +36,7 @@ private:
     void desetupUi();
     void retranslateUi();
 
+    void test();
 };
 
 #endif // SIGNALTAP_H

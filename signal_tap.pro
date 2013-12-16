@@ -18,7 +18,6 @@ SOURCES += \
     src/MenuFile.cpp \
     src/WaveView.cpp \
     src/WaveTimeLine.cpp \
-    src/GraphicsView.cpp \
     src/MenuView.cpp \
     src/MenuReplay.cpp \
     src/MenuHelp.cpp \
@@ -26,14 +25,14 @@ SOURCES += \
     src/MenuBar.cpp \
     src/ToolBar.cpp \
     src/StatusBar.cpp \
-    src/SignalTap.cpp
+    src/SignalTap.cpp \
+    src/WaveShow.cpp
 
 HEADERS  += \
     src/MenuEdit.h \
     src/MenuFile.h \
     src/WaveView.h \
     src/WaveTimeLine.h \
-    src/GraphicsView.h \
     src/MenuView.h \
     src/MenuReplay.h \
     src/MenuHelp.h \
@@ -41,7 +40,8 @@ HEADERS  += \
     src/MenuBar.h \
     src/ToolBar.h \
     src/StatusBar.h \
-    src/SignalTap.h
+    src/SignalTap.h \
+    src/WaveShow.h
 
 FORMS    += signaltap.ui
 

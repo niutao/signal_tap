@@ -7,13 +7,13 @@
 #include <QStyleOptionGraphicsItem>
 #include <QCursor>
 
-class WaveView;
+class WaveShow;
 
 class WaveTimeLine : public QObject, public QGraphicsLineItem
 {
     Q_OBJECT
 public:
-    WaveTimeLine(WaveView *waveview);
+    WaveTimeLine(WaveShow *waveshow);
     void setLine(qreal x1, qreal y1, qreal x2, qreal y2);
 
 protected:
@@ -30,7 +30,7 @@ public slots:
 
 private:
     QCursor* mCursor;
-    WaveView *mWaveView;
+    WaveShow *mWaveShow;
 
     int mLastScrollBarPos;
     int mScrollBarOffset;
