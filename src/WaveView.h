@@ -5,6 +5,9 @@
 #include <QGraphicsScene>
 #include <QStyle>
 #include <QColor>
+#include <QHBoxLayout>
+#include <QTreeView>
+#include <QtWidgets>
 
 class WaveTimeLine;
 class GraphicsView;
@@ -20,6 +23,12 @@ public:
 private:
     QPen mPens[MAX];
     WaveTimeLine *mTimeLine;
+
+private:
+    QWidget *mTab;
+    QHBoxLayout *mHL;
+    QTreeView *mSignalView;
+    void setupUi();
 
 public:
     /** set the style of each pen */

@@ -2,12 +2,26 @@
 #define MENUEDIT_H
 
 #include <QObject>
+#include <QMenu>
+#include <QAction>
 
-class MenuEdit : public QObject
+class SignalTap;
+class MenuBar;
+
+class MenuEdit : public QMenu
 {
     Q_OBJECT
 public:
-    explicit MenuEdit(QObject *parent = 0);
+    explicit MenuEdit(MenuBar *parent, SignalTap *st);
+    ~MenuEdit();
+private:
+    QAction *actionEditClear;
+    QAction *actionEditOptions;
+    QAction *actionEditZoomIn;
+    QAction *actionEditZoomOut;
+    void setupUi();
+    void desetupUi();
+    void retranslateUi();
 
 signals:
 

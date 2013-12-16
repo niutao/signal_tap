@@ -1,5 +1,5 @@
 #include "WaveView.h"
-#include "signaltap.h"
+#include "SignalTap.h"
 #include <errno.h>
 #include "WaveTimeLine.h"
 #include <QGraphicsItem>
@@ -9,15 +9,7 @@
 WaveView::WaveView(QObject *parent):
     QGraphicsScene(parent)
 {
-    mGraphicsView = new GraphicsView();
-
-    mGraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    //waveView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    QBrush brush(QColor(0, 0, 0, 255));
-    brush.setStyle(Qt::NoBrush);
-    mGraphicsView->setBackgroundBrush(brush);
-
-    mGraphicsView->setScene(this);
+    setupUi();
 
     mTimeLine = new WaveTimeLine(this);
 
@@ -25,6 +17,47 @@ WaveView::WaveView(QObject *parent):
 
     setPenStyle(Wave, Qt::green, Qt::SolidLine, 1);
     setPenStyle(Move, Qt::magenta, Qt::DashLine, 1);
+
+}
+void WaveView::setupUi()
+{
+        mTab = new QWidget();
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(mTab->sizePolicy().hasHeightForWidth());
+        mTab->setSizePolicy(sizePolicy1);
+
+        mHL = new QHBoxLayout(mTab);
+        mHL->setSpacing(6);
+        mHL->setContentsMargins(11, 11, 11, 11);
+        mHL->setContentsMargins(0, 0, 0, 0);
+
+        mSignalView = new QTreeView(mTab);
+        mSignalView->setEnabled(true);
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(mSignalView->sizePolicy().hasHeightForWidth());
+        mSignalView->setSizePolicy(sizePolicy2);
+        mSignalView->setMaximumSize(QSize(100, 16777215));
+        mSignalView->setBaseSize(QSize(0, 0));
+
+        mHL->addWidget(mSignalView);
+
+        mGraphicsView = new GraphicsView();
+
+        mGraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        //waveView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        QBrush brush(QColor(0, 0, 0, 255));
+        brush.setStyle(Qt::NoBrush);
+        mGraphicsView->setBackgroundBrush(brush);
+
+        mGraphicsView->setScene(this);
+
+        mHL->addWidget(mGraphicsView);
+
+        //tabWidget->addTab(tab, QString());
 }
 
 void WaveView::setPenStyle(WaveView::Pen pen, QColor color,
@@ -104,7 +137,7 @@ void WaveView::drawTest()
     width = 10;
     height = 20;
 
-    for (int i = 0; i < 100000; i += 2) {
+    for (int i = 0; i < 10000; i += 2) {
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
@@ -133,12 +166,12 @@ void WaveView::drawTest()
         this->removeItem(item);
     }
 #endif
-    x = 50000 * 10;
+    x = 10000 * 10;
     y = 25;
     width = 10;
     height = 20;
 
-    for (int i = 0; i < 50000; i += 2) {
+    for (int i = 0; i < 40000; i += 2) {
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }

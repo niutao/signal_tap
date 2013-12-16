@@ -1,4 +1,4 @@
-#define QT_NO_DEBUG_OUTPUT
+//#define QT_NO_DEBUG_OUTPUT
 #include "WaveTimeLine.h"
 #include "WaveView.h"
 #include "GraphicsView.h"
@@ -74,19 +74,23 @@ void WaveTimeLine::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     qDebug("%s\n", "hoverEnterEvent");
     mCursor->setShape(Qt::SplitHCursor);
     this->setCursor(*mCursor);
-
+    QPointF p;
+    p.setX(this->pos().x() + this->line().x1() + mScrollBarOffset);
+    p.setY(this->pos().y() + this->line().y1());
+    event->setPos(p);
     update();
     QGraphicsLineItem::hoverEnterEvent(event);
 }
 
 void WaveTimeLine::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
-{
+{/*
     Q_UNUSED(event);
     qDebug("%s\n", "hoverMoveEvent");
+
     mCursor->setShape(Qt::SplitHCursor);
     this->setCursor(*mCursor);
     update();
-    QGraphicsLineItem::hoverMoveEvent(event);
+    QGraphicsLineItem::hoverMoveEvent(event);*/
 }
 
 void WaveTimeLine::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)

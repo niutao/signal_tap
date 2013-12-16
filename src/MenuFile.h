@@ -2,15 +2,31 @@
 #define MENUFILE_H
 
 #include <QObject>
-//#include "signaltap.h"
+#include <QMenu>
 
 class SignalTap;
+class MenuBar;
 
-class MenuFile : public QObject
+class MenuFile : public QMenu
 {
     Q_OBJECT
 public:
-    MenuFile(SignalTap *st);
+    MenuFile(MenuBar *parent, SignalTap *st);
+    ~MenuFile();
+
+private:
+    QAction *actionFileNew;
+    QAction *actionFileOpen;
+    QAction *actionFileSave;
+    QAction *actionFileExportAsBIN;
+    QAction *actionFileExportAsWLF;
+    QAction *actionFilePrint;
+    QAction *actionFilePrintSetup;
+    QAction *actionFileExit;
+
+    void setupUi();
+    void desetupUi();
+    void retranslateUi();
 
 signals:
 

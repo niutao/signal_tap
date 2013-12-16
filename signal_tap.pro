@@ -13,22 +13,35 @@ TEMPLATE = app
 
 
 SOURCES += \
-	src/main.cpp\
-        src/signaltap.cpp \
+    src/main.cpp\
     src/MenuEdit.cpp \
     src/MenuFile.cpp \
     src/WaveView.cpp \
     src/WaveTimeLine.cpp \
-    src/GraphicsView.cpp
+    src/GraphicsView.cpp \
+    src/MenuView.cpp \
+    src/MenuReplay.cpp \
+    src/MenuHelp.cpp \
+    src/MenuCapture.cpp \
+    src/MenuBar.cpp \
+    src/ToolBar.cpp \
+    src/StatusBar.cpp \
+    src/SignalTap.cpp
 
 HEADERS  += \
-	src/signaltap.h \
     src/MenuEdit.h \
     src/MenuFile.h \
-    Debug/ui_signaltap.h \
     src/WaveView.h \
     src/WaveTimeLine.h \
-    src/GraphicsView.h
+    src/GraphicsView.h \
+    src/MenuView.h \
+    src/MenuReplay.h \
+    src/MenuHelp.h \
+    src/MenuCapture.h \
+    src/MenuBar.h \
+    src/ToolBar.h \
+    src/StatusBar.h \
+    src/SignalTap.h
 
 FORMS    += signaltap.ui
 
