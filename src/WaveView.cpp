@@ -19,8 +19,8 @@ WaveView::WaveView(SignalTap *st, QString *waveName):
     mWaveName = waveName;
 
     connect(mCloseButton, SIGNAL(clicked()), this, SLOT(onCloseButtonClicked()));
-
 }
+
 WaveView::~WaveView()
 {
     desetupUi();
@@ -117,4 +117,13 @@ void WaveView::resizeEvent(QResizeEvent *event)
 void WaveView::onCloseButtonClicked()
 {
     mST->removeWaveView(this);
+}
+
+bool WaveView::openWave(QString &wave)
+{
+    mWaveShow->drawTest();
+    mWaveShow->mTimeLine->setLine(100, 0, 100, getHeight());
+    horizontalScrollBar()->setSliderPosition(0);
+
+    return true;
 }

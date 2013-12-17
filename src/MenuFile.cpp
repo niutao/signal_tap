@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "SignalTap.h"
 #include "MenuBar.h"
+#include <QFileDialog>
 
 MenuFile::MenuFile(MenuBar *parent, SignalTap *st):
     QMenu(parent)
@@ -97,6 +98,20 @@ void MenuFile::onNewTriggered()
 
 void MenuFile::onOpenTriggered()
 {
+    QString fileName;
+
+    QFileDialog *fd = new QFileDialog(mST);
+    fd->setNameFilter(tr(SIGNALTAP_WAVEFILE_FILTER));
+    fd->setFileMode(QFileDialog::ExistingFile);
+    fd->setViewMode(QFileDialog::List);
+    if (fd->exec() == QDialog::Accepted) {
+        fileName = fd->selectedFiles()[0];
+
+        mST->addWaveView(fileName);
+    }
+    fd->close();
+
+    qDebug("selectedFile = %s\n", (const char *)fileName.toLocal8Bit());
 }
 
 void MenuFile::onSaveTriggered()
@@ -121,6 +136,7 @@ void MenuFile::onPrintSetupTriggered()
 
 void MenuFile::onExitTriggered()
 {
+    mST->close();
 }
 
 

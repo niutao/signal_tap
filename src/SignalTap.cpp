@@ -1,10 +1,13 @@
 #include "SignalTap.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <libgen.h>
 #include "WaveView.h"
 #include "MenuBar.h"
 #include "ToolBar.h"
 #include "StatusBar.h"
 #include "WaveShow.h"
+#include "WaveTimeLine.h"
 #include <QSizePolicy>
 #include <QPushButton>
 
@@ -144,12 +147,15 @@ bool SignalTap::addWaveView(QString &wave)
     qDebug("%s\n",(const char *) wave.toLocal8Bit());
 
     waveview = new WaveView(this);
-    int index = mTopTab->addTab(waveview->mTab, wave);
+
+    int index = mTopTab->addTab(waveview->mTab, basename(wave.toLatin1().data()));
     mTopTab->tabBar()->setTabButton(index, QTabBar::RightSide, waveview->mCloseButton);
     mTopTab->setTabToolTip(index, wave);
     mTopTab->setCurrentIndex(index);
 
     mWaveViewList.append(waveview);
+
+    waveview->openWave(wave);
 
     return true;
 }

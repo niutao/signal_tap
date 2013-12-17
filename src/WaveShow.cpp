@@ -9,6 +9,9 @@ WaveShow::WaveShow(WaveView *parent):
     mParent = parent;
     setupUi();
     retranslateUi();
+
+    mTimeLine->setPen(mPens[Move]);
+    addItem(mTimeLine);
 }
 
 WaveShow::~WaveShow()
@@ -139,18 +142,6 @@ void WaveShow::drawTest()
         this->removeItem(item);
     }
 #endif
-    x = 10000 * 10;
-    y = 25;
-    width = 10;
-    height = 20;
 
-    for (int i = 0; i < 40000; i += 2) {
-        drawPosedge(x + width * i, y, height, width, 1);
-        drawNegedge(x + width * (i + 1), y - height, height, width, 1);
-    }
 
-    mTimeLine->setPen(mPens[Move]);
-    mTimeLine->setLine(100, 0, 100, this->width());
-
-    addItem(mTimeLine);
 }

@@ -14,6 +14,7 @@ public:
 private:
     SignalTap *mST;
     QAction *mNew;
+    QAction *mOpen;
     QAction *mGoBegin;
     QAction *mGoPrev;
     QAction *mGoNext;

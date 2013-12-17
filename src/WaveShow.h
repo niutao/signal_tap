@@ -19,9 +19,10 @@ public:
     WaveView *mParent;
     ~WaveShow();
     enum Pen{TimeLine = 0, Scale, Move, Wave, MAX};
+    WaveTimeLine *mTimeLine;
 private:
     QPen mPens[MAX];
-    WaveTimeLine *mTimeLine;
+
     void setupUi();
     void desetupUi();
     void retranslateUi();

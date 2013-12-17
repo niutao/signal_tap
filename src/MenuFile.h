@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMenu>
 
+#define SIGNALTAP_WAVEFILE_FILTER "all(*.wsf *.wlf *.fst *.vcd);;wsf(*.wsf);;wlf(*.wlf);fst(*.fst);;vcd(*.vcd)"
+
 class SignalTap;
 class MenuBar;
 

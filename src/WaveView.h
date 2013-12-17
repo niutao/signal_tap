@@ -19,7 +19,6 @@ class WaveView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    //WaveView(QWidget *parent);
     WaveView(SignalTap *st, QString *waveName = 0);
     ~WaveView();
     QWidget *mTab;
@@ -44,7 +43,7 @@ protected:
 public:
     int getWidth();
     int getHeight();
-
+    bool openWave(QString &wave);
 signals:
 
 public slots:
