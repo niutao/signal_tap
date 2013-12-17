@@ -7,17 +7,18 @@
 MenuFile::MenuFile(MenuBar *parent, SignalTap *st):
     QMenu(parent)
 {
+    mST = st;
     setupUi();
     retranslateUi();
 
-    connect(actionFileNew, SIGNAL(triggered()), this, SLOT(actionFileNewTriggered()));
-    connect(actionFileOpen, SIGNAL(triggered()), this, SLOT(actionFileOpenTriggered()));
-    connect(actionFileSave, SIGNAL(triggered()), this, SLOT(actionFileSaveTriggered()));
-    connect(actionFileExportAsBIN, SIGNAL(triggered()), this, SLOT(actionFileExportAsBINTriggered()));
-    connect(actionFileExportAsWLF, SIGNAL(triggered()), this, SLOT(actionFileExportAsWLFTriggered()));
-    connect(actionFilePrint, SIGNAL(triggered()), this, SLOT(actionFilePrintTriggered()));
-    connect(actionFilePrintSetup, SIGNAL(triggered()), this, SLOT(actionFilePrintSetupTriggered()));
-    connect(actionFileExit, SIGNAL(triggered()), this, SLOT(actionFileExitTriggered()));
+    connect(mNew, SIGNAL(triggered()), this, SLOT(onNewTriggered()));
+    connect(mOpen, SIGNAL(triggered()), this, SLOT(onOpenTriggered()));
+    connect(mSave, SIGNAL(triggered()), this, SLOT(onSaveTriggered()));
+    connect(mExportAsBIN, SIGNAL(triggered()), this, SLOT(onExportAsBINTriggered()));
+    connect(mExportAsWLF, SIGNAL(triggered()), this, SLOT(onExportAsWLFTriggered()));
+    connect(mPrint, SIGNAL(triggered()), this, SLOT(onPrintTriggered()));
+    connect(mPrintSetup, SIGNAL(triggered()), this, SLOT(onPrintSetupTriggered()));
+    connect(mExit, SIGNAL(triggered()), this, SLOT(onExitTriggered()));
 
 }
 MenuFile::~MenuFile()
@@ -27,86 +28,98 @@ MenuFile::~MenuFile()
 
 void MenuFile::setupUi()
 {
+    QIcon icon;
     setTitle(QApplication::translate(SIGNALTAP_CONTEXT, "&File", 0));
 
-    actionFileNew = new QAction(this);
-    QIcon icon;
+    mNew = new QAction(this);
     icon.addFile(QStringLiteral(":/res/images/new.png"), QSize(), QIcon::Normal, QIcon::Off);
-    actionFileNew->setIcon(icon);
+    mNew->setIcon(icon);
+    addAction(mNew);
 
-    actionFileOpen = new QAction(this);
-    actionFileSave = new QAction(this);
-    actionFileExportAsBIN = new QAction(this);
-    actionFileExportAsWLF = new QAction(this);
-    actionFilePrint = new QAction(this);
-    actionFilePrintSetup = new QAction(this);
-    actionFileExit = new QAction(this);
+    mOpen = new QAction(this);
+    icon.addFile(QStringLiteral(":/res/images/open.png"), QSize(), QIcon::Normal, QIcon::Off);
+    mOpen->setIcon(icon);
+    addAction(mOpen);
 
-    addAction(actionFileNew);
-    addAction(actionFileOpen);
-    addAction(actionFileSave);
+    mSave = new QAction(this);
+    addAction(mSave);
+
     addSeparator();
-    addAction(actionFileExportAsBIN);
-    addAction(actionFileExportAsWLF);
+
+    mExportAsBIN = new QAction(this);
+    addAction(mExportAsBIN);
+
+    mExportAsWLF = new QAction(this);
+    addAction(mExportAsWLF);
+
     addSeparator();
-    addAction(actionFilePrint);
-    addAction(actionFilePrintSetup);
+
+    mPrint = new QAction(this);
+    addAction(mPrint);
+
+    mPrintSetup = new QAction(this);
+    addAction(mPrintSetup);
+
     addSeparator();
-    addAction(actionFileExit);
+
+    mExit = new QAction(this);
+    addAction(mExit);
 }
+
 void MenuFile::desetupUi()
 {
-    delete actionFileNew;
-    delete actionFileOpen;
-    delete actionFileSave;
-    delete actionFileExportAsBIN;
-    delete actionFileExportAsWLF;
-    delete actionFilePrint;
-    delete actionFilePrintSetup;
-    delete actionFileExit;
+    delete mNew;
+    delete mOpen;
+    delete mSave;
+    delete mExportAsBIN;
+    delete mExportAsWLF;
+    delete mPrint;
+    delete mPrintSetup;
+    delete mExit;
 }
 
 void MenuFile::retranslateUi()
 {
-    actionFileNew->setText(QApplication::translate(SIGNALTAP_CONTEXT, "New", 0));
-    actionFileOpen->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Open...", 0));
-    actionFileSave->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Save", 0));
-    actionFileExportAsBIN->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Export as binrary...", 0));
-    actionFileExportAsWLF->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Export as WLF file...", 0));
-    actionFilePrint->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Print", 0));
-    actionFilePrintSetup->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Print Setup...", 0));
-    actionFileExit->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Exit", 0));
+    mNew->setText(QApplication::translate(SIGNALTAP_CONTEXT, "New", 0));
+    mOpen->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Open...", 0));
+    mSave->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Save", 0));
+    mExportAsBIN->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Export as binrary...", 0));
+    mExportAsWLF->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Export as WLF file...", 0));
+    mPrint->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Print", 0));
+    mPrintSetup->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Print Setup...", 0));
+    mExit->setText(QApplication::translate(SIGNALTAP_CONTEXT, "Exit", 0));
 }
 
-void MenuFile::actionFileNewTriggered()
+void MenuFile::onNewTriggered()
+{
+    mST->addWaveView();
+}
+
+void MenuFile::onOpenTriggered()
 {
 }
 
-void MenuFile::actionFileOpenTriggered()
+void MenuFile::onSaveTriggered()
 {
 }
 
-void MenuFile::actionFileSaveTriggered()
+void MenuFile::onExportAsBINTriggered()
 {
 }
 
-void MenuFile::actionFileExportAsBINTriggered()
+void MenuFile::onExportAsWLFTriggered()
 {
 }
 
-void MenuFile::actionFileExportAsWLFTriggered()
+void MenuFile::onPrintTriggered()
 {
 }
 
-void MenuFile::actionFilePrintTriggered()
+void MenuFile::onPrintSetupTriggered()
 {
 }
 
-void MenuFile::actionFilePrintSetupTriggered()
-{
-}
-
-void MenuFile::actionFileExitTriggered()
+void MenuFile::onExitTriggered()
 {
 }
 

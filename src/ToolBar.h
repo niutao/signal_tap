@@ -12,7 +12,12 @@ public:
     ToolBar(SignalTap *st);
     ~ToolBar();
 private:
-    QAction *actionToolBarNew;
+    SignalTap *mST;
+    QAction *mNew;
+    QAction *mGoBegin;
+    QAction *mGoPrev;
+    QAction *mGoNext;
+    QAction *mGoLast;
     void setupUi();
     void desetupUi();
     void retranslateUi();

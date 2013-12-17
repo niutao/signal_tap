@@ -14,16 +14,17 @@ public:
     MenuFile(MenuBar *parent, SignalTap *st);
     ~MenuFile();
 
+public:
+    QAction *mNew;
+    QAction *mOpen;
+    QAction *mSave;
+    QAction *mExportAsBIN;
+    QAction *mExportAsWLF;
+    QAction *mPrint;
+    QAction *mPrintSetup;
+    QAction *mExit;
 private:
-    QAction *actionFileNew;
-    QAction *actionFileOpen;
-    QAction *actionFileSave;
-    QAction *actionFileExportAsBIN;
-    QAction *actionFileExportAsWLF;
-    QAction *actionFilePrint;
-    QAction *actionFilePrintSetup;
-    QAction *actionFileExit;
-
+    SignalTap *mST;
     void setupUi();
     void desetupUi();
     void retranslateUi();
@@ -31,14 +32,14 @@ private:
 signals:
 
 public slots:
-    void actionFileNewTriggered();
-    void actionFileOpenTriggered();
-    void actionFileSaveTriggered();
-    void actionFileExportAsBINTriggered();
-    void actionFileExportAsWLFTriggered();
-    void actionFilePrintTriggered();
-    void actionFilePrintSetupTriggered();
-    void actionFileExitTriggered();
+    void onNewTriggered();
+    void onOpenTriggered();
+    void onSaveTriggered();
+    void onExportAsBINTriggered();
+    void onExportAsWLFTriggered();
+    void onPrintTriggered();
+    void onPrintSetupTriggered();
+    void onExitTriggered();
 };
 
 #endif // MENUFILE_H

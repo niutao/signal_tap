@@ -47,6 +47,12 @@
      <layout class="QHBoxLayout" name="horizontalLayoutMain">
       <item>
        <widget class="QTabWidget" name="tabWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -248,6 +254,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionToolBarNew"/>
+   <addaction name="actionActionGoBegin"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionFileNew">
@@ -412,6 +419,18 @@
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionActionGoBegin">
+   <property name="icon">
+    <iconset resource="signal_tap.qrc">
+     <normaloff>:/res/images/go-first-32.png</normaloff>:/res/images/go-first-32.png</iconset>
+   </property>
+   <property name="text">
+    <string>actionGoBegin</string>
+   </property>
+   <property name="toolTip">
+    <string>go to the first page</string>
    </property>
   </action>
  </widget>

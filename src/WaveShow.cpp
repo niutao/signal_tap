@@ -1,3 +1,4 @@
+#include <errno.h>
 #include "WaveShow.h"
 #include "WaveView.h"
 #include "WaveTimeLine.h"
@@ -9,6 +10,7 @@ WaveShow::WaveShow(WaveView *parent):
     setupUi();
     retranslateUi();
 }
+
 WaveShow::~WaveShow()
 {
     desetupUi();

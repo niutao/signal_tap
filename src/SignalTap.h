@@ -21,22 +21,22 @@ public:
     explicit SignalTap(QWidget *parent = 0);
     ~SignalTap();
     bool addWaveView();
+    bool addWaveView(QString &wave);
+    bool removeWaveView(int index);
+    bool removeWaveView(WaveView *waveview);
 
 public:
-    QList <WaveView *> mWaveViewList;
-
-private:
     MenuBar *mMenuBar;
     ToolBar *mToolBar;
     QWidget *mTopWidget;
     QHBoxLayout *mTopHL;
     QTabWidget *mTopTab;
     StatusBar *mStatusBar;
+private:
+    QList <WaveView *> mWaveViewList;
     void setupUi();
     void desetupUi();
     void retranslateUi();
-
-    void test();
 };
 
 #endif // SIGNALTAP_H

@@ -6,14 +6,13 @@
 #include "StatusBar.h"
 #include "WaveShow.h"
 #include <QSizePolicy>
+#include <QPushButton>
 
 SignalTap::SignalTap(QWidget *parent) :
     QMainWindow(parent)
 {
     setupUi();
     retranslateUi();
-
-    test();
 }
 
 SignalTap::~SignalTap()
@@ -25,6 +24,7 @@ void SignalTap::setupUi()
 {
     // set the default size of window
     resize(800, 600);
+    setWindowState(Qt::WindowMaximized);
     QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
     sizePolicy1.setHorizontalStretch(0);
     sizePolicy1.setVerticalStretch(0);
@@ -62,6 +62,13 @@ void SignalTap::setupUi()
 
     // create the tabl widget
     mTopTab = new QTabWidget(mTopWidget);
+    mTopTab->setFocusPolicy(Qt::NoFocus);
+    // set the width of tab
+    mTopTab->setStyleSheet("QTabBar::tab{width:120;height:32}");
+
+    mTopTab->tabBar()->setElideMode(Qt::ElideRight);
+    mTopTab->setDocumentMode(false);
+    // set the width of tab bar
     mTopHL->addWidget(mTopTab);
 
     // create the status bar
@@ -85,22 +92,70 @@ void SignalTap::desetupUi()
     delete mToolBar;
     delete mMenuBar;
 }
-
-bool SignalTap::addWaveView()
+bool SignalTap::removeWaveView(int index)
 {
+    int count = mTopTab->count();
+
+    if (index < 0 || index >= count)
+        return false;
+
+    mTopTab->removeTab(index);
+    QWidget *tab = mTopTab->widget(index);
+
+    foreach (WaveView *waveview, mWaveViewList) {
+        if (waveview->mTab == tab) {
+            mWaveViewList.removeOne(waveview);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool SignalTap::removeWaveView(WaveView *waveview)
+{
+    foreach (WaveView *wave, mWaveViewList) {
+        if (wave == waveview) {
+            int index = mTopTab->indexOf(wave->mTab);
+            if (index != -1)
+                mTopTab->removeTab(index);
+            mWaveViewList.removeOne(wave);
+            return index != -1 ? true : false;
+        }
+    }
+
+    return false;
+}
+
+bool SignalTap::addWaveView(QString &wave)
+{
+    WaveView *waveview;
+
+    if (wave.isEmpty()) {
+        QDateTime dt;
+        QTime time;
+        QDate date;
+
+        dt.setTime(time.currentTime());
+        dt.setDate(date.currentDate());
+        QString currentDate = dt.toString("yyyyMMdd-hhmmss");
+        wave = (QString)"wave-" + currentDate;
+    }
+
+    qDebug("%s\n",(const char *) wave.toLocal8Bit());
+
+    waveview = new WaveView(this);
+    int index = mTopTab->addTab(waveview->mTab, wave);
+    mTopTab->tabBar()->setTabButton(index, QTabBar::RightSide, waveview->mCloseButton);
+    mTopTab->setTabToolTip(index, wave);
+    mTopTab->setCurrentIndex(index);
+
+    mWaveViewList.append(waveview);
+
     return true;
 }
-
-void SignalTap::test()
+bool SignalTap::addWaveView()
 {
-    WaveView *test;
-
-    test = new WaveView(this);
-    mTopTab->addTab(test->mTab, "test");
-    mWaveViewList.append(test);
-
-    test = new WaveView(this);
-    mTopTab->addTab(test->mTab, "test1");
-    mWaveViewList.append(test);
-    test->mWaveShow->drawTest();
+    QString lable = "";
+    addWaveView(lable);
 }
+

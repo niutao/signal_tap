@@ -2,5 +2,13 @@
     <qresource prefix="/">
         <file>res/images/new.png</file>
         <file>res/images/logo.png</file>
+        <file>res/images/go-first-32.png</file>
+        <file>res/images/go-last-32.png</file>
+        <file>res/images/go-next-32.png</file>
+        <file>res/images/go-previous-32.png</file>
+        <file>res/images/zoom-in-32.png</file>
+        <file>res/images/zoom-out-32.png</file>
+        <file>res/images/open.png</file>
+        <file>res/images/close.png</file>
     </qresource>
 </RCC>

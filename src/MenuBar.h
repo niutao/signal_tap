@@ -17,14 +17,15 @@ public:
     MenuBar(SignalTap *st);
     ~MenuBar();
 
-private:
-    SignalTap *st;
+public:
     MenuFile *mMenuFile;
     MenuEdit *mMenuEdit;
     MenuView *mMenuView;
     MenuCapture *mMenuCapture;
     MenuReplay *mMenuReplay;
     MenuHelp *mMenuHelp;
+private:
+    SignalTap *mST;
     void setupUi();
     void desetupUi();
     void retranslateUi();

@@ -10,7 +10,7 @@
 MenuBar::MenuBar(SignalTap *st):
     QMenuBar(st)
 {
-    this->st = st;
+    mST = st;
     setupUi();
     retranslateUi();
 }
@@ -21,12 +21,12 @@ MenuBar::~MenuBar()
 
 void MenuBar::setupUi()
 {
-    mMenuFile = new MenuFile(this, st);
-    mMenuEdit = new MenuEdit(this, st);
-    mMenuView = new MenuView(this, st);
-    mMenuCapture = new MenuCapture(this, st);
-    mMenuReplay = new MenuReplay(this, st);
-    mMenuHelp = new MenuHelp(this, st);
+    mMenuFile = new MenuFile(this, mST);
+    mMenuEdit = new MenuEdit(this, mST);
+    mMenuView = new MenuView(this, mST);
+    mMenuCapture = new MenuCapture(this, mST);
+    mMenuReplay = new MenuReplay(this, mST);
+    mMenuHelp = new MenuHelp(this, mST);
 
     addAction(mMenuFile->menuAction());
     addAction(mMenuEdit->menuAction());

@@ -4,18 +4,23 @@
 #include "WaveTimeLine.h"
 #include <QGraphicsItem>
 #include <QScrollBar>
+#include <QTabBar>
 #include "WaveShow.h"
 
-WaveView::WaveView(QWidget *parent):
-    QGraphicsView(parent)
+WaveView::WaveView(SignalTap *st, QString *waveName):
+    QGraphicsView(st)
 {
+    mST = st;
     setupUi();
     retranslateUi();
 
     mWidth = this->width();
     mHeight = this->height();
-}
+    mWaveName = waveName;
 
+    connect(mCloseButton, SIGNAL(clicked()), this, SLOT(onCloseButtonClicked()));
+
+}
 WaveView::~WaveView()
 {
     desetupUi();
@@ -57,7 +62,16 @@ void WaveView::setupUi()
     setScene(mWaveShow);
 
     mHL->addWidget(this);
+
+    QIcon icon;
+    icon.addFile(QStringLiteral(":/res/images/close.png"), QSize(), QIcon::Normal, QIcon::Off);
+    mCloseButton = new QPushButton();
+    mCloseButton->setIcon(icon);
+    mCloseButton->setFixedSize(24, 24);
+    mCloseButton->setFocusPolicy(Qt::NoFocus);
+    mCloseButton->setFlat(true);
 }
+
 void WaveView::desetupUi()
 {
     delete mWaveShow;
@@ -98,4 +112,9 @@ void WaveView::resizeEvent(QResizeEvent *event)
     mHeight = s.height();
 
     qDebug("size(%f, %f)\n", scene->width(), scene->height());
+}
+
+void WaveView::onCloseButtonClicked()
+{
+    mST->removeWaveView(this);
 }

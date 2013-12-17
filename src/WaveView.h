@@ -9,22 +9,29 @@
 #include <QTreeView>
 #include <QtWidgets>
 #include <QGraphicsView>
+#include <QTabBar>
+#include <QPushButton>
 
 class WaveShow;
+class SignalTap;
 
 class WaveView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    WaveView(QWidget *parent);
+    //WaveView(QWidget *parent);
+    WaveView(SignalTap *st, QString *waveName = 0);
     ~WaveView();
     QWidget *mTab;
     WaveShow *mWaveShow;
+    QString *mWaveName;
+    QPushButton *mCloseButton;
 
     //private fileds for ui
 private:
     QHBoxLayout *mHL;
     QTreeView *mSignalView;
+    SignalTap *mST;
 
     int mWidth;
     int mHeight;
@@ -41,6 +48,7 @@ public:
 signals:
 
 public slots:
+    void onCloseButtonClicked();
 
 };
 
