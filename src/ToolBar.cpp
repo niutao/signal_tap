@@ -19,7 +19,8 @@ ToolBar::~ToolBar()
 void ToolBar::setupUi()
 {
     QIcon icon;
-
+    // fix the toolbar on the window
+    setMovable(false);
     // set the height and width of toolbar, and the size of icon in
     // toolbar
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -37,6 +38,7 @@ void ToolBar::setupUi()
     mNew->setAutoRepeat(true);
     mNew->setIconVisibleInMenu(true);
 #else
+    // we share the mNew QAction with MenuFile
     mNew = mST->mMenuBar->mMenuFile->mNew;
 #endif
     addAction(mNew);
@@ -49,6 +51,7 @@ void ToolBar::setupUi()
     mOpen->setAutoRepeat(true);
     mOpen->setIconVisibleInMenu(true);
 #else
+    // we share the mOpen QAction with MenuFile
     mOpen = mST->mMenuBar->mMenuFile->mOpen;
 #endif
     addAction(mOpen);
