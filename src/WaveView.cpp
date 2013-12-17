@@ -121,7 +121,7 @@ void WaveView::onCloseButtonClicked()
 
 bool WaveView::openWave(QString &wave)
 {
-    mWaveShow->drawTest();
+
     mWaveShow->mTimeLine->setLine(100, 0, 100, getHeight());
     horizontalScrollBar()->setSliderPosition(0);
 

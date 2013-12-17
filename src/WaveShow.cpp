@@ -6,12 +6,13 @@
 WaveShow::WaveShow(WaveView *parent):
     QGraphicsScene(parent)
 {
-    mParent = parent;
+    mWaveView = parent;
     setupUi();
     retranslateUi();
 
     mTimeLine->setPen(mPens[Move]);
     addItem(mTimeLine);
+    drawTest();
 }
 
 WaveShow::~WaveShow()
@@ -113,18 +114,11 @@ void WaveShow::drawTest()
     width = 10;
     height = 20;
 
-    for (int i = 0; i < 10000; i += 2) {
+    for (int i = 0; i < 1000; i += 2) {
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
 
-
-    /*
-    for (int i = 0; i < 10000; i += 2) {
-        drawPosedge(x + width * i, y, height, width, 1);
-        drawNegedge(x + width * (i + 1), y - height, height, width, 1);
-    }
-    */
     x = 0;
     y = 55;
     width = 40;
@@ -134,14 +128,4 @@ void WaveShow::drawTest()
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
-#if 0
-    QList<QGraphicsItem *> list;
-    list = this->items(0, 0, 50000, mGraphicsView->height(), Qt::IntersectsItemShape, Qt::AscendingOrder);
-    qDebug("list.count = %d\n", list.count());
-    foreach (QGraphicsItem *item, list) {
-        this->removeItem(item);
-    }
-#endif
-
-
 }

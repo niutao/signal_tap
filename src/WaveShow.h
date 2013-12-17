@@ -16,7 +16,7 @@ class WaveShow : public QGraphicsScene
 {
 public:
     WaveShow(WaveView *parent);
-    WaveView *mParent;
+    WaveView *mWaveView;
     ~WaveShow();
     enum Pen{TimeLine = 0, Scale, Move, Wave, MAX};
     WaveTimeLine *mTimeLine;

@@ -16,7 +16,7 @@ WaveTimeLine::WaveTimeLine(WaveShow *waveshow)
 
     mWaveShow = waveshow;
 
-    mLastScrollBarPos = mWaveShow->mParent->horizontalScrollBar()->sliderPosition();
+    mLastScrollBarPos = mWaveShow->mWaveView->horizontalScrollBar()->sliderPosition();
     mScrollBarOffset = 0;
 
 }
@@ -35,9 +35,9 @@ void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF current = event->pos();
     qreal timeLineCurrentPos;
-    QScrollBar *bar = mWaveShow->mParent->horizontalScrollBar();
+    QScrollBar *bar = mWaveShow->mWaveView->horizontalScrollBar();
 
-    mWaveShow->mParent->ensureVisible(this, 100, 0);
+    mWaveShow->mWaveView->ensureVisible(this, 100, 0);
     if (mLastScrollBarPos != bar->sliderPosition()) {
         update();
         QGraphicsLineItem::mouseMoveEvent(event);
@@ -48,10 +48,10 @@ void WaveTimeLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 
     timeLineCurrentPos = this->pos().x() + current.x() + mScrollBarOffset;
-    qDebug("POS2(%f, %f, %f, %f, %f, %f)", mWaveShow->mParent->width(), this->line().x1(), timeLineCurrentPos,
+    qDebug("POS2(%f, %f, %f, %f, %f, %f)", mWaveShow->width(), this->line().x1(), timeLineCurrentPos,
            (qreal)bar->sliderPosition(), this->pos().x(), current.x());
 
-    if (timeLineCurrentPos < mWaveShow->mParent->width() && timeLineCurrentPos > 0) {
+    if (timeLineCurrentPos < mWaveShow->width() && timeLineCurrentPos > 0) {
         moveBy(current.x() - this->line().x1() + mScrollBarOffset, 0);
     }
 
