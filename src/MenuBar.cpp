@@ -21,6 +21,9 @@ MenuBar::~MenuBar()
 
 void MenuBar::setupUi()
 {
+    // disable the right mouse button events
+    setContextMenuPolicy(Qt::PreventContextMenu);
+
     mMenuFile = new MenuFile(this);
     mMenuEdit = new MenuEdit(this);
     mMenuView = new MenuView(this);

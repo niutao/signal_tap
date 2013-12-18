@@ -18,9 +18,11 @@ ToolBar::~ToolBar()
 
 void ToolBar::setupUi()
 {
-    QIcon icon;
     // fix the toolbar on the window
     setMovable(false);
+    setFloatable(false);
+    // disable the right mouse button events
+    setContextMenuPolicy(Qt::PreventContextMenu);
     // set the height and width of toolbar, and the size of icon in
     // toolbar
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -32,9 +34,10 @@ void ToolBar::setupUi()
     setIconSize(QSize(20, 20));
 #if 0
     mNew = new QAction(this);
-    icon.addFile(QStringLiteral(":/res/images/new.png"),
+    QIcon iconNew;
+    iconNew.addFile(QStringLiteral(":/res/images/new.png"),
                  QSize(), QIcon::Normal, QIcon::Off);
-    mNew->setIcon(icon);
+    mNew->setIcon(iconNew);
     mNew->setAutoRepeat(true);
     mNew->setIconVisibleInMenu(true);
 #else
@@ -45,9 +48,10 @@ void ToolBar::setupUi()
 
 #if 0
     mOpen = new QAction(this);
-    icon.addFile(QStringLiteral(":/res/images/open.png"),
+    QIcon iconOpen;
+    iconOpen.addFile(QStringLiteral(":/res/images/open.png"),
                  QSize(), QIcon::Normal, QIcon::Off);
-    mOpen->setIcon(icon);
+    mOpen->setIcon(iconOpen);
     mOpen->setAutoRepeat(true);
     mOpen->setIconVisibleInMenu(true);
 #else
@@ -65,33 +69,37 @@ void ToolBar::setupUi()
 
     // go to the first position of the wave
     mGoBegin = new QAction(this);
-    icon.addFile(QStringLiteral(":/res/images/go-first-32.png"),
+    QIcon iconGoFirst;
+    iconGoFirst.addFile(QStringLiteral(":/res/images/go_first.png"),
                  QSize(), QIcon::Normal, QIcon::Off);
-    mGoBegin->setIcon(icon);
+    mGoBegin->setIcon(iconGoFirst);
     mGoBegin->setAutoRepeat(true);
     mGoBegin->setIconVisibleInMenu(true);
     addAction(mGoBegin);
 
     mGoPrev = new QAction(this);
-    icon.addFile(QStringLiteral(":/res/images/go-previous-32.png"),
+    QIcon iconGoPrevious;
+    iconGoPrevious.addFile(QStringLiteral(":/res/images/go_previous.png"),
                  QSize(), QIcon::Normal, QIcon::Off);
-    mGoPrev->setIcon(icon);
+    mGoPrev->setIcon(iconGoPrevious);
     mGoPrev->setAutoRepeat(true);
     mGoPrev->setIconVisibleInMenu(true);
     addAction(mGoPrev);
 
     mGoNext = new QAction(this);
-    icon.addFile(QStringLiteral(":/res/images/go-next-32.png"),
+    QIcon iconGoNext;
+    iconGoNext.addFile(QStringLiteral(":/res/images/go_next.png"),
                  QSize(), QIcon::Normal, QIcon::Off);
-    mGoNext->setIcon(icon);
+    mGoNext->setIcon(iconGoNext);
     mGoNext->setAutoRepeat(true);
     mGoNext->setIconVisibleInMenu(true);
     addAction(mGoNext);
 
     mGoLast = new QAction(this);
-    icon.addFile(QStringLiteral(":/res/images/go-last-32.png"),
+    QIcon iconGoLast;
+    iconGoLast.addFile(QStringLiteral(":/res/images/go_last.png"),
                  QSize(), QIcon::Normal, QIcon::Off);
-    mGoLast->setIcon(icon);
+    mGoLast->setIcon(iconGoLast);
     mGoLast->setAutoRepeat(true);
     mGoLast->setIconVisibleInMenu(true);
     addAction(mGoLast);
@@ -109,6 +117,7 @@ void ToolBar::retranslateUi()
                         "go to the previous page of the wave", 0));
     mGoNext->setToolTip(QApplication::translate(SIGNALTAP_CONTEXT,
                         "go to the next page of the wave", 0));
+
     mGoLast->setToolTip(QApplication::translate(SIGNALTAP_CONTEXT,
                         "go to the last page of the wave", 0));
 }

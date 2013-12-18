@@ -29,17 +29,20 @@ MenuFile::~MenuFile()
 
 void MenuFile::setupUi()
 {
-    QIcon icon;
     setTitle(QApplication::translate(SIGNALTAP_CONTEXT, "&File", 0));
 
     mNew = new QAction(this);
-    icon.addFile(QStringLiteral(":/res/images/new.png"), QSize(), QIcon::Normal, QIcon::Off);
-    mNew->setIcon(icon);
+    QIcon iconNew;
+    iconNew.addFile(QStringLiteral(":/res/images/new.png"),
+                    QSize(), QIcon::Normal, QIcon::Off);
+    mNew->setIcon(iconNew);
     addAction(mNew);
 
     mOpen = new QAction(this);
-    icon.addFile(QStringLiteral(":/res/images/open.png"), QSize(), QIcon::Normal, QIcon::Off);
-    mOpen->setIcon(icon);
+    QIcon iconOpen;
+    iconOpen.addFile(QStringLiteral(":/res/images/open.png"),
+                     QSize(), QIcon::Normal, QIcon::Off);
+    mOpen->setIcon(iconOpen);
     addAction(mOpen);
 
     mSave = new QAction(this);
