@@ -21,12 +21,12 @@ MenuBar::~MenuBar()
 
 void MenuBar::setupUi()
 {
-    mMenuFile = new MenuFile(this, mST);
-    mMenuEdit = new MenuEdit(this, mST);
-    mMenuView = new MenuView(this, mST);
-    mMenuCapture = new MenuCapture(this, mST);
-    mMenuReplay = new MenuReplay(this, mST);
-    mMenuHelp = new MenuHelp(this, mST);
+    mMenuFile = new MenuFile(this);
+    mMenuEdit = new MenuEdit(this);
+    mMenuView = new MenuView(this);
+    mMenuCapture = new MenuCapture(this);
+    mMenuReplay = new MenuReplay(this);
+    mMenuHelp = new MenuHelp(this);
 
     addAction(mMenuFile->menuAction());
     addAction(mMenuEdit->menuAction());

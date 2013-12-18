@@ -11,7 +11,7 @@ class MenuHelp : public QMenu
 {
     Q_OBJECT
 public:
-    explicit MenuHelp(MenuBar *parent, SignalTap *st);
+    explicit MenuHelp(MenuBar *parent);
     ~MenuHelp();
 private:
     QAction *actionHelpHelpTopic;

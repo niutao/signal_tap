@@ -11,7 +11,7 @@ class MenuReplay : public QMenu
 {
     Q_OBJECT
 public:
-    explicit MenuReplay(MenuBar *parent, SignalTap *st);
+    explicit MenuReplay(MenuBar *parent);
     ~MenuReplay();
 private:
     QAction *actionReplayReplay;

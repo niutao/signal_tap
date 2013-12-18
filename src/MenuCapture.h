@@ -12,7 +12,7 @@ class MenuCapture : public QMenu
 {
     Q_OBJECT
 public:
-    explicit MenuCapture(MenuBar *parent, SignalTap *st);
+    explicit MenuCapture(MenuBar *parent);
     ~MenuCapture();
 private:
     QAction *actionCaptureStart;

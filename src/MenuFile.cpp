@@ -5,10 +5,10 @@
 #include "MenuBar.h"
 #include <QFileDialog>
 
-MenuFile::MenuFile(MenuBar *parent, SignalTap *st):
+MenuFile::MenuFile(MenuBar *parent):
     QMenu(parent)
 {
-    mST = st;
+    mST = parent->mST;
     setupUi();
     retranslateUi();
 

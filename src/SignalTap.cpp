@@ -27,7 +27,7 @@ void SignalTap::setupUi()
 {
     // set the default size of window
     resize(800, 600);
-    setWindowState(Qt::WindowMaximized);
+    //setWindowState(Qt::WindowMaximized);
     QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
     sizePolicy1.setHorizontalStretch(0);
     sizePolicy1.setVerticalStretch(0);
@@ -59,8 +59,7 @@ void SignalTap::setupUi()
     setCentralWidget(mTopWidget);
 
     mTopHL = new QHBoxLayout(mTopWidget);
-    mTopHL->setSpacing(6);
-    mTopHL->setContentsMargins(11, 11, 11, 11);
+    mTopHL->setSpacing(0);
     mTopHL->setContentsMargins(0, 0, 0, 0);
 
     // create the tabl widget
@@ -162,6 +161,17 @@ bool SignalTap::addWaveView(QString &wave)
 bool SignalTap::addWaveView()
 {
     QString lable = "";
-    addWaveView(lable);
+
+    return addWaveView(lable);
+}
+
+WaveView *SignalTap::getCurrentWaveView()
+{
+    if (mWaveViewList.count() == 0)
+        return NULL;
+
+    WaveTabWidget *widget = (WaveTabWidget *)mTopTab->currentWidget();
+
+    return widget->getWaveView();
 }
 

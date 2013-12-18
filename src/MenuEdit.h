@@ -12,13 +12,20 @@ class MenuEdit : public QMenu
 {
     Q_OBJECT
 public:
-    explicit MenuEdit(MenuBar *parent, SignalTap *st);
+    explicit MenuEdit(MenuBar *parent);
     ~MenuEdit();
+public:
+    QAction *mZoomIn;
+    QAction *mZoomOut;
+
+    QAction *mTimeLine1;
+    QAction *mTimeLine2;
+
+    QAction *mClear;
+
+    QAction *mOptions;
 private:
-    QAction *actionEditClear;
-    QAction *actionEditOptions;
-    QAction *actionEditZoomIn;
-    QAction *actionEditZoomOut;
+    SignalTap *mST;
     void setupUi();
     void desetupUi();
     void retranslateUi();
@@ -26,7 +33,12 @@ private:
 signals:
 
 public slots:
-
+    void onZoomInTriggered();
+    void onZoomOutTriggered();
+    void onTimeLine1Triggered();
+    void onTimeLine2Triggered();
+    void onClearTriggered();
+    void onOptionsTriggered();
 };
 
 #endif // MENUEDIT_H

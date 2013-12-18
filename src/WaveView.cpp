@@ -28,7 +28,8 @@ WaveView::~WaveView()
 
 void WaveView::setupUi()
 {
-    mTab = new QWidget();
+    mTab = new WaveTabWidget(this);
+
     QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
     sizePolicy1.setHorizontalStretch(0);
     sizePolicy1.setVerticalStretch(0);
@@ -36,8 +37,7 @@ void WaveView::setupUi()
     mTab->setSizePolicy(sizePolicy1);
 
     mHL = new QHBoxLayout(mTab);
-    mHL->setSpacing(6);
-    mHL->setContentsMargins(11, 11, 11, 11);
+    mHL->setSpacing(2);
     mHL->setContentsMargins(0, 0, 0, 0);
 
     mSignalView = new QTreeView(mTab);
@@ -61,7 +61,9 @@ void WaveView::setupUi()
     mWaveShow = new WaveShow(this);
     setScene(mWaveShow);
 
+
     mHL->addWidget(this);
+    qDebug("mHL(%d, %d)\n", this->width(), this->height());
 
     QIcon icon;
     icon.addFile(QStringLiteral(":/res/images/close.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -104,12 +106,21 @@ void WaveView::resizeEvent(QResizeEvent *event)
     QSize s = event->size();
     Q_UNUSED(s);
 
+    QRectF rect;
+
     QGraphicsScene *scene = this->scene();
 
     scene->setSceneRect(0, 0, scene->width(), event->size().height());
 
     mWidth = s.width();
     mHeight = s.height();
+
+    rect.setX(0);
+    rect.setY(0);
+    rect.setWidth(scene->width());
+    rect.setHeight(event->size().height());
+
+    emit onSceneRectChangedEvent(rect);
 
     qDebug("size(%f, %f)\n", scene->width(), scene->height());
 }
@@ -121,9 +132,21 @@ void WaveView::onCloseButtonClicked()
 
 bool WaveView::openWave(QString &wave)
 {
-
-    mWaveShow->mTimeLine->setLine(100, 0, 100, getHeight());
+    mWaveShow->drawTest();
     horizontalScrollBar()->setSliderPosition(0);
 
     return true;
+}
+
+
+WaveTabWidget::WaveTabWidget(WaveView *waveview)
+{
+    mWaveView = waveview;
+}
+WaveTabWidget::~WaveTabWidget()
+{
+}
+WaveView *WaveTabWidget::getWaveView()
+{
+    return mWaveView;
 }

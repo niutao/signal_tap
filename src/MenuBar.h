@@ -18,6 +18,7 @@ public:
     ~MenuBar();
 
 public:
+    SignalTap *mST;
     MenuFile *mMenuFile;
     MenuEdit *mMenuEdit;
     MenuView *mMenuView;
@@ -25,7 +26,6 @@ public:
     MenuReplay *mMenuReplay;
     MenuHelp *mMenuHelp;
 private:
-    SignalTap *mST;
     void setupUi();
     void desetupUi();
     void retranslateUi();

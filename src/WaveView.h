@@ -14,6 +14,7 @@
 
 class WaveShow;
 class SignalTap;
+class WaveTabWidget;
 
 class WaveView : public QGraphicsView
 {
@@ -21,16 +22,15 @@ class WaveView : public QGraphicsView
 public:
     WaveView(SignalTap *st, QString *waveName = 0);
     ~WaveView();
-    QWidget *mTab;
+    WaveTabWidget *mTab;
     WaveShow *mWaveShow;
     QString *mWaveName;
     QPushButton *mCloseButton;
-
+    SignalTap *mST;
     //private fileds for ui
 private:
     QHBoxLayout *mHL;
     QTreeView *mSignalView;
-    SignalTap *mST;
 
     int mWidth;
     int mHeight;
@@ -45,10 +45,23 @@ public:
     int getHeight();
     bool openWave(QString &wave);
 signals:
+    void onSceneRectChangedEvent(const QRectF & rect);
 
 public slots:
     void onCloseButtonClicked();
 
+};
+
+class WaveTabWidget: public QWidget
+{
+    Q_OBJECT
+public:
+    WaveTabWidget(WaveView *waveview);
+    ~WaveTabWidget();
+public:
+    WaveView *getWaveView();
+private:
+    WaveView *mWaveView;
 };
 
 #endif // WAVEVIEW_H

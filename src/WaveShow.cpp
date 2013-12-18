@@ -1,7 +1,12 @@
 #include <errno.h>
 #include "WaveShow.h"
 #include "WaveView.h"
+#include "MenuBar.h"
+#include "MenuEdit.h"
 #include "WaveTimeLine.h"
+#include "SignalTap.h"
+#include <QCursor>
+#include <QMenu>
 
 WaveShow::WaveShow(WaveView *parent):
     QGraphicsScene(parent)
@@ -10,9 +15,21 @@ WaveShow::WaveShow(WaveView *parent):
     setupUi();
     retranslateUi();
 
-    mTimeLine->setPen(mPens[Move]);
-    addItem(mTimeLine);
-    drawTest();
+    // set the default rect of GraphicsScene
+    this->setSceneRect(0, 0,
+                       mWaveView->mST->mTopTab->width() - parent->width() - 8,
+                       mWaveView->mST->mTopTab->height());
+
+    mTimeLines[TimeLine1] = new WaveTimeLine(this);
+    mTimeLines[TimeLine1]->setPenStyle(Qt::magenta, Qt::DashLine, 1);
+    mTimeLines[TimeLine2] = new WaveTimeLine(this);
+    mTimeLines[TimeLine2]->setPenStyle(Qt::yellow, Qt::DashLine, 1);
+
+    mTimeLinePlaced[TimeLine1] = false;
+    mTimeLinePlaced[TimeLine2] = false;
+
+    connect(parent, SIGNAL(onSceneRectChangedEvent(QRectF)),
+            this, SLOT(onSceneRectChangedEvent(QRectF)));
 }
 
 WaveShow::~WaveShow()
@@ -25,7 +42,13 @@ void WaveShow::setupUi()
     setPenStyle(Wave, Qt::green, Qt::SolidLine, 1);
     setPenStyle(Move, Qt::magenta, Qt::DashLine, 1);
 
-    mTimeLine = new WaveTimeLine(this);
+    // create the context menu
+    mContextMenu = new QMenu();
+    mContextMenu->addAction(mWaveView->mST->mMenuBar->mMenuEdit->mZoomIn);
+    mContextMenu->addAction(mWaveView->mST->mMenuBar->mMenuEdit->mZoomOut);
+    mContextMenu->addSeparator();
+    mContextMenu->addAction(mWaveView->mST->mMenuBar->mMenuEdit->mTimeLine1);
+    mContextMenu->addAction(mWaveView->mST->mMenuBar->mMenuEdit->mTimeLine2);
 }
 void WaveShow::retranslateUi()
 {
@@ -34,7 +57,8 @@ void WaveShow::retranslateUi()
 
 void WaveShow::desetupUi()
 {
-    delete mTimeLine;
+    delete mTimeLines[TimeLine1];
+    delete mTimeLines[TimeLine2];
 }
 
 void WaveShow::setPenStyle(Pen pen, QColor color,
@@ -55,6 +79,45 @@ void WaveShow::setPenStyle(Pen pen, QColor color,
 QGraphicsLineItem *WaveShow::addLine(Pen pen, qreal x1, qreal y1, qreal x2, qreal y2)
 {
     return QGraphicsScene::addLine(x1, y1, x2, y2, mPens[pen]);
+}
+bool WaveShow::setWaveWidth(int width)
+{
+    this->setSceneRect(0, 0, width, this->height());
+}
+
+void WaveShow::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    qDebug("right mouse\n");
+    QPoint pos = event->screenPos();
+
+    mContextMenu->exec(pos);
+}
+
+void WaveShow::placeTimeLine(QPointF pos, TimeLine timeline)
+{
+    if (mTimeLinePlaced[timeline])
+        removeItem(mTimeLines[timeline]);
+
+    mTimeLines[timeline]->setLine(pos.x(), 0, pos.x(), this->height());
+    addItem(mTimeLines[timeline]);
+    mTimeLinePlaced[timeline] = true;
+}
+
+void WaveShow::onSceneRectChangedEvent(const QRectF &rect)
+{
+    WaveTimeLine *tl;
+    qDebug("RECT(%f, %f, %f, %f)\n", rect.x(), rect.y(), rect.width(), rect.height());
+#if 0
+    for (int timeline = TimeLine1; timeline < TimeLine2; timeline++) {
+        tl = mTimeLines[timeline];
+        if (mTimeLinePlaced[timeline])
+            tl->setLine(
+                        tl->line().x1(),
+                        tl->line().y1(),
+                        tl->line().x1(),
+                        rect.height());
+    }
+#endif
 }
 
 void WaveShow::drawPosedge(qreal x, qreal y, qreal height, qreal width, qreal count)
@@ -104,6 +167,7 @@ void WaveShow::drawNegedge(qreal x, qreal y, qreal height, qreal width, qreal co
         addLine(Wave, x2, yy, xx, yy);
     }
 }
+
 void WaveShow::drawTest()
 {
     qreal width, height;
@@ -128,4 +192,6 @@ void WaveShow::drawTest()
         drawPosedge(x + width * i, y, height, width, 1);
         drawNegedge(x + width * (i + 1), y - height, height, width, 1);
     }
+
+    setWaveWidth(20000);
 }

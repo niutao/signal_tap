@@ -12,7 +12,7 @@ class MenuView : public QMenu
 {
     Q_OBJECT
 public:
-    explicit MenuView(MenuBar *parent, SignalTap *st);
+    explicit MenuView(MenuBar *parent);
     ~MenuView();
 private:
     QAction *actionViewToolBar;

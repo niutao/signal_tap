@@ -14,12 +14,24 @@ WaveTimeLine::WaveTimeLine(WaveShow *waveshow)
     setAcceptDrops(true);
     setZValue(0);
 
+    // set the default pen color and style
+    setPenStyle(Qt::magenta, Qt::DashLine, 1);
+    setPen(mPen);
+
     mWaveShow = waveshow;
 
     mLastScrollBarPos = mWaveShow->mWaveView->horizontalScrollBar()->sliderPosition();
     mScrollBarOffset = 0;
-
 }
+
+void WaveTimeLine::setPenStyle(QColor color, Qt::PenStyle style, qreal width)
+{
+    mPen.setColor(color);
+    mPen.setStyle(style);
+    mPen.setWidthF(width);
+    setPen(mPen);
+}
+
 void WaveTimeLine::setLine(qreal x1, qreal y1, qreal x2, qreal y2)
 {
     QGraphicsLineItem::setLine(x1, y1, x2, y2);

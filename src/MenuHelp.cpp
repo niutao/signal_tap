@@ -2,7 +2,7 @@
 #include "SignalTap.h"
 #include "MenuBar.h"
 
-MenuHelp::MenuHelp(MenuBar *parent, SignalTap *st) :
+MenuHelp::MenuHelp(MenuBar *parent) :
     QMenu(parent)
 {
     setupUi();

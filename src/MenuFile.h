@@ -13,7 +13,7 @@ class MenuFile : public QMenu
 {
     Q_OBJECT
 public:
-    MenuFile(MenuBar *parent, SignalTap *st);
+    MenuFile(MenuBar *parent);
     ~MenuFile();
 
 public:
