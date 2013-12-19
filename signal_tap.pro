@@ -75,4 +75,13 @@ OTHER_FILES += \
     libs/wlf/libwlf_x86.a \
     libs/wlf/libwlf_x86.so
 
-unix|win32: LIBS += -lz -lusb
+LIBS += -lz
+
+win32: LIBS += -L$$PWD/libs/usb/ -lusb_win_x86
+
+INCLUDEPATH += $$PWD/libs/usb
+DEPENDPATH += $$PWD/libs/usb
+
+win32: PRE_TARGETDEPS += $$PWD/libs/usb/libusb_win_x86.a
+
+unix: LIBS += -lz -lusb

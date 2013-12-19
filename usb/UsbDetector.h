@@ -4,11 +4,11 @@
 #include <QObject>
 #include <QThread>
 
-class UsbDetector : public QObject, public QThread
+class UsbDetector : public QThread
 {
     Q_OBJECT
 public:
-    explicit UsbDetector(QObject *parent = 0);
+    explicit UsbDetector();
     ~UsbDetector();
     void run();
 signals:

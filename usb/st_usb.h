@@ -21,7 +21,11 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#ifdef WIN32
+#include "lusb0_usb.h"
+#else
 #include <usb.h>
+#endif
 #define USB_CTRL_GET_TIMEOUT    2000
 #define USB_CTRL_SET_TIMEOUT    2000
 

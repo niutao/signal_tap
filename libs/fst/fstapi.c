@@ -19,8 +19,10 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
+#ifdef WIN32
+#else
 #include "linux_x86_64.h"
+#endif
 
 #include "fstapi.h"
 #include "fastlz.h"

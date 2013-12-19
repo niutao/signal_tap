@@ -3,17 +3,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#ifdef WIN32
+#else
 #include <sys/socket.h>
 #include <linux/netlink.h>
+#endif
 #define UEVENT_BUFFER_SIZE 2048
 
-UsbDetector::UsbDetector(QObject * parent):
-    QObject(parent)
+UsbDetector::UsbDetector()
 {
 }
-
+UsbDetector::~UsbDetector()
+{
+}
 void UsbDetector::run()
 {
+#if 0
     struct sockaddr_nl client;
     struct timeval tv;
     int CppLive, rcvlen, ret;
@@ -47,4 +52,5 @@ void UsbDetector::run()
     }
     close(CppLive);
     return 0;
+#endif
 }

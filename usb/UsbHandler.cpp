@@ -42,6 +42,9 @@ int UsbHandler::openDevice()
     if (mState != CLOSED)
         return 0;
 
+    if (mIdVendor == 0 && mIdProduct == 0)
+        return -EINVAL;
+
     mDevice = st_usb_init();
     if (mDevice == NULL)
         return -ENOMEM;
