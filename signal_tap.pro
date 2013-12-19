@@ -26,7 +26,15 @@ SOURCES += \
     src/ToolBar.cpp \
     src/StatusBar.cpp \
     src/SignalTap.cpp \
-    src/WaveShow.cpp
+    src/WaveShow.cpp \
+    libs/fst/fastlz.c \
+    libs/fst/fstapi.c \
+    libs/fst/lz4.c \
+    libs/vcd/vcd_header.c \
+    libs/vcd/vcd.c \
+    usb/st_usb.c \
+    usb/UsbHandler.cpp \
+    usb/UsbDetector.cpp
 
 HEADERS  += \
     src/MenuEdit.h \
@@ -41,9 +49,30 @@ HEADERS  += \
     src/ToolBar.h \
     src/StatusBar.h \
     src/SignalTap.h \
-    src/WaveShow.h
+    src/WaveShow.h \
+    libs/fst/fastlz.h \
+    libs/fst/fstapi.h \
+    libs/fst/linux_x86_64.h \
+    libs/fst/lz4.h \
+    libs/vcd/vcd_header.h \
+    libs/vcd/vcd.h \
+    libs/wlf/acc_sc.h \
+    libs/wlf/acc_user.h \
+    libs/wlf/acc_vhdl.h \
+    libs/wlf/mti.h \
+    libs/wlf/wlf_api_int.h \
+    libs/wlf/wlf_api.h \
+    usb/st_usb.h \
+    usb/UsbHandler.h \
+    usb/UsbDetector.h
 
 FORMS    += signaltap.ui
 
 RESOURCES += \
     signal_tap.qrc
+
+OTHER_FILES += \
+    libs/wlf/libwlf_x86.a \
+    libs/wlf/libwlf_x86.so
+
+unix|win32: LIBS += -lz -lusb
