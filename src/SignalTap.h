@@ -21,8 +21,8 @@ class SignalTap : public QMainWindow
 public:
     explicit SignalTap(QWidget *parent = 0);
     ~SignalTap();
-    bool addWaveView();
-    bool addWaveView(QString &wave);
+    WaveView *addWaveView();
+    WaveView *addWaveView(QString &wave);
     bool removeWaveView(int index);
     bool removeWaveView(WaveView *waveview);
     WaveView *getCurrentWaveView();

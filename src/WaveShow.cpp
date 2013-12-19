@@ -107,7 +107,7 @@ void WaveShow::onSceneRectChangedEvent(const QRectF &rect)
 {
     WaveTimeLine *tl;
     qDebug("RECT(%f, %f, %f, %f)\n", rect.x(), rect.y(), rect.width(), rect.height());
-#if 0
+
     for (int timeline = TimeLine1; timeline < TimeLine2; timeline++) {
         tl = mTimeLines[timeline];
         if (mTimeLinePlaced[timeline])
@@ -117,7 +117,7 @@ void WaveShow::onSceneRectChangedEvent(const QRectF &rect)
                         tl->line().x1(),
                         rect.height());
     }
-#endif
+
 }
 
 void WaveShow::drawPosedge(qreal x, qreal y, qreal height, qreal width, qreal count)

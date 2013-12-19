@@ -29,8 +29,17 @@ void MenuEdit::setupUi()
     setTitle(QApplication::translate(SIGNALTAP_CONTEXT, "&Edit", 0));
 
     mZoomIn = new QAction(this);
+    QIcon iconZoomIn;
+    iconZoomIn.addFile(QStringLiteral(":/res/images/zoom_in.png"),
+                    QSize(), QIcon::Normal, QIcon::Off);
+    mZoomIn->setIcon(iconZoomIn);
     addAction(mZoomIn);
+
     mZoomOut = new QAction(this);
+    QIcon iconZoomOut;
+    iconZoomOut.addFile(QStringLiteral(":/res/images/zoom_out.png"),
+                    QSize(), QIcon::Normal, QIcon::Off);
+    mZoomOut->setIcon(iconZoomOut);
     addAction(mZoomOut);
 
     addSeparator();
@@ -95,7 +104,7 @@ void MenuEdit::onTimeLine1Triggered()
     // waveview->cursor().pos().x() is the current x position of desktop screen
     // waveview->mST->pos().x() is the current x position of application window
     // waveview->pos().x() is the current x position of waveview on application window
-    pos.setX(waveview->cursor().pos().x() - waveview->mST->pos().x() - waveview->pos().x());
+    pos.setX(waveview->cursor().pos().x() - waveview->mST->pos().x() - waveview->pos().x() - 2);
     pos.setY(waveview->height());
     qDebug("onTimeLine1Triggered POS(%f, %f)\n", pos.x(), pos.y());
     waveview->mWaveShow->placeTimeLine(pos, WaveShow::TimeLine1);
@@ -114,7 +123,7 @@ void MenuEdit::onTimeLine2Triggered()
     // waveview->cursor().pos().x() is the current x position of desktop screen
     // waveview->mST->pos().x() is the current x position of application window
     // waveview->pos().x() is the current x position of waveview on application window
-    pos.setX(waveview->cursor().pos().x() - waveview->mST->pos().x() - waveview->pos().x());
+    pos.setX(waveview->cursor().pos().x() - waveview->mST->pos().x() - waveview->pos().x() - 2);
     pos.setY(waveview->height());
     qDebug("onTimeLine2Triggered POS(%f, %f)\n", pos.x(), pos.y());
     waveview->mWaveShow->placeTimeLine(pos, WaveShow::TimeLine2);

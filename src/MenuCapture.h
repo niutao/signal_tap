@@ -14,13 +14,17 @@ class MenuCapture : public QMenu
 public:
     explicit MenuCapture(MenuBar *parent);
     ~MenuCapture();
+
+public:
+    QAction *mStart;
+    QAction *mStop;
 private:
-    QAction *actionCaptureStart;
-    QAction *actionCaptureStop;
-    QAction *actionCaptureStartWithTime;
-    QAction *actionCaptureSetup;
-    QAction *actionCaptureSampling;
-    QAction *actionCaptureTrigger;
+    SignalTap *mST;
+
+    QAction *mStartWithTime;
+    QAction *mSetup;
+    QAction *mSampling;
+    QAction *mTrigger;
 
     void setupUi();
     void desetupUi();
@@ -29,7 +33,12 @@ private:
 signals:
 
 public slots:
-
+    void onStartTriggered();
+    void onStopTriggered();
+    void onStartWithTimeTriggered();
+    void onSetupTriggered();
+    void onSamplingTriggered();
+    void onTriggerTriggered();
 };
 
 #endif // MENUEDIT_H

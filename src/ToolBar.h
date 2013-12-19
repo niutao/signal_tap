@@ -13,8 +13,15 @@ public:
     ~ToolBar();
 private:
     SignalTap *mST;
+
+    // action from MenuFile
     QAction *mNew;
     QAction *mOpen;
+
+    // action from MenuCapture
+    QAction *mStartCapture;
+    QAction *mStopCapture;
+
     QAction *mGoBegin;
     QAction *mGoPrev;
     QAction *mGoNext;

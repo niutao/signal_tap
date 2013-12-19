@@ -33,14 +33,14 @@ void MenuFile::setupUi()
 
     mNew = new QAction(this);
     QIcon iconNew;
-    iconNew.addFile(QStringLiteral(":/res/images/new.png"),
+    iconNew.addFile(QStringLiteral(":/res/images/new_wave.png"),
                     QSize(), QIcon::Normal, QIcon::Off);
     mNew->setIcon(iconNew);
     addAction(mNew);
 
     mOpen = new QAction(this);
     QIcon iconOpen;
-    iconOpen.addFile(QStringLiteral(":/res/images/open.png"),
+    iconOpen.addFile(QStringLiteral(":/res/images/open_wave.png"),
                      QSize(), QIcon::Normal, QIcon::Off);
     mOpen->setIcon(iconOpen);
     addAction(mOpen);

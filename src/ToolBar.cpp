@@ -2,6 +2,7 @@
 #include "SignalTap.h"
 #include "MenuBar.h"
 #include "MenuFile.h"
+#include "MenuCapture.h"
 
 ToolBar::ToolBar(SignalTap *st):
     QToolBar(st)
@@ -59,6 +60,32 @@ void ToolBar::setupUi()
     mOpen = mST->mMenuBar->mMenuFile->mOpen;
 #endif
     addAction(mOpen);
+
+#if 0
+    mStartCapture = new QAction(this);
+    QIcon iconStartCapture;
+    iconStartCapture.addFile(QStringLiteral(":/res/images/start_capture.png"),
+                 QSize(), QIcon::Normal, QIcon::Off);
+    mStartCapture->setIcon(iconStartCapture);
+    mStartCapture->setAutoRepeat(true);
+    mStartCapture->setIconVisibleInMenu(true);
+#else
+    mStartCapture = mST->mMenuBar->mMenuCapture->mStart;
+#endif
+    addAction(mStartCapture);
+
+#if 0
+    mStopCapture = new QAction(this);
+    QIcon iconStartCapture;
+    iconStartCapture.addFile(QStringLiteral(":/res/images/stop_capture.png"),
+                 QSize(), QIcon::Normal, QIcon::Off);
+    mStopCapture->setIcon(iconStartCapture);
+    mStopCapture->setAutoRepeat(true);
+    mStopCapture->setIconVisibleInMenu(true);
+#else
+    mStopCapture = mST->mMenuBar->mMenuCapture->mStop;
+#endif
+    addAction(mStopCapture);
 
     // add a space widget to tool bar to make the action after than it
     // can right align on the tool bar

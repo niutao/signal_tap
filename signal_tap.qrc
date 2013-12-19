@@ -1,14 +1,16 @@
 <RCC>
     <qresource prefix="/">
         <file>res/images/logo.png</file>
-        <file>res/images/zoom-in-32.png</file>
-        <file>res/images/zoom-out-32.png</file>
-        <file>res/images/open.png</file>
         <file>res/images/close.png</file>
         <file>res/images/go_first.png</file>
         <file>res/images/go_last.png</file>
         <file>res/images/go_next.png</file>
         <file>res/images/go_previous.png</file>
-        <file>res/images/new.png</file>
+        <file>res/images/start_capture.png</file>
+        <file>res/images/stop_capture.png</file>
+        <file>res/images/new_wave.png</file>
+        <file>res/images/open_wave.png</file>
+        <file>res/images/zoom_in.png</file>
+        <file>res/images/zoom_out.png</file>
     </qresource>
 </RCC>

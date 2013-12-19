@@ -27,7 +27,7 @@ void SignalTap::setupUi()
 {
     // set the default size of window
     resize(800, 600);
-    //setWindowState(Qt::WindowMaximized);
+    setWindowState(Qt::WindowMaximized);
     QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
     sizePolicy1.setHorizontalStretch(0);
     sizePolicy1.setVerticalStretch(0);
@@ -128,7 +128,7 @@ bool SignalTap::removeWaveView(WaveView *waveview)
     return false;
 }
 
-bool SignalTap::addWaveView(QString &wave)
+WaveView *SignalTap::addWaveView(QString &wave)
 {
     WaveView *waveview;
 
@@ -156,9 +156,9 @@ bool SignalTap::addWaveView(QString &wave)
 
     waveview->openWave(wave);
 
-    return true;
+    return waveview;
 }
-bool SignalTap::addWaveView()
+WaveView *SignalTap::addWaveView()
 {
     QString lable = "";
 
