@@ -33,8 +33,13 @@ SOURCES += \
     libs/vcd/vcd_header.c \
     libs/vcd/vcd.c \
     usb/st_usb.c \
-    usb/UsbHandler.cpp \
-    usb/UsbDetector.cpp
+    usb/UsbHandler.cpp
+
+unix: SOURCES += \
+    usb/UsbDetector_linux.cpp
+
+win32: SOURCES += \
+    usb/UsbDetector_win32.cpp
 
 HEADERS  += \
     src/MenuEdit.h \
