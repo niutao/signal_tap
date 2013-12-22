@@ -69,7 +69,8 @@ HEADERS  += \
     libs/wlf/wlf_api.h \
     usb/st_usb.h \
     usb/UsbHandler.h \
-    usb/UsbDetector.h
+    usb/UsbDetector.h \
+    usb/lusb0_usb.h
 
 FORMS    += signaltap.ui
 
