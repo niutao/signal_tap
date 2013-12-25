@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QThread>
 #include <QBuffer>
+#include <stdint.h>
 
 class UsbDetector : public QObject
 {
@@ -17,18 +18,16 @@ private:
     bool init();
     int mNetLinkSocket;
 #ifdef Q_OS_LINUX
-    QBuffer mSocketBuffer;
     class QSocketNotifier *mSocketNotifier;
-    void parseLine(const QByteArray& line);
+    void parseMessage(QByteArray& message);
 #elif Q_OS_WIN32
     HWND hwnd;
 #else
 #error "please add the platform support"
 #endif
 signals:
-    void deviceAdded(const QString& dev);
-    void deviceChanged(const QString& dev);
-    void deviceRemoved(const QString& dev);
+    void deviceChanged(uint16_t idVendor, uint16_t idProduct, QString &action,
+                       QString &devpath, QString &other);
 public slots:
     void usbDetectorCallback();
 };

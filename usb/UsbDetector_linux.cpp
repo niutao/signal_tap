@@ -90,7 +90,7 @@ bool UsbDetector::init()
     }
 
     mSocketNotifier = new QSocketNotifier(mNetLinkSocket, QSocketNotifier::Read, this);
-    connect(mSocketNotifier, SIGNAL(activated(int)), SLOT(parseDeviceInfo()));
+    connect(mSocketNotifier, SIGNAL(activated(int)), SLOT(usbDetectorCallback()));
     mSocketNotifier->setEnabled(false);
 
     return true;
@@ -124,43 +124,51 @@ void UsbDetector::usbDetectorCallback()
     data.resize(UEVENT_BUFFER_SIZE * 2);
     data.fill(0);
     size_t len = read(mSocketNotifier->socket(), data.data(), UEVENT_BUFFER_SIZE * 2);
-    qDebug("read fro socket %d bytes", len);
     data.resize(len);
 
     //In the original line each information is seperated by 0
     data = data.replace(0, '\n').trimmed();
 
-    if (mSocketBuffer.isOpen())
-        mSocketBuffer.close();
-
-    mSocketBuffer.setBuffer(&data);
-    mSocketBuffer.open(QIODevice::ReadOnly);
-
-    while (!mSocketBuffer.atEnd()) {
-        parseLine(mSocketBuffer.readLine().trimmed());
-    }
-
-    mSocketBuffer.close();
+    parseMessage(data);
 }
 
-void UsbDetector::parseLine(const QByteArray & line)
+void UsbDetector::parseMessage(QByteArray & message)
 {
-    qDebug("%s", line.constData());
+    QBuffer socketBuffer;
+    QString line;
+    QString  action, devpath, product;
+    uint16_t idVendor, idProduct;
 
-    if (!line.contains("/block/"))    //hotplug
+    // we only care the action of usb device, so if the message if not contain
+    // usb_device, just return
+    if (!message.contains("DEVTYPE=usb_device"))
         return;
 
-    QString action_str = line.left(line.indexOf('@')).toLower();
-    QString dev = "/dev/" + line.right(line.length() - line.lastIndexOf('/') - 1);
+    socketBuffer.setBuffer(&message);
+    socketBuffer.open(QIODevice::ReadOnly);
 
-    if (action_str == QLatin1String("add")) {
-        deviceAdded(dev);
-    } else if (action_str == QLatin1String("remove")) {
-        deviceRemoved(dev);
-    } else if (action_str == QLatin1String("change")) {
-        deviceChanged(dev);
+    while (!socketBuffer.atEnd()) {
+        line = socketBuffer.readLine().trimmed().constData();
+
+        if (line.startsWith("ACTION=")) {
+            action = line.remove("ACTION=");
+        } else if (line.startsWith("DEVPATH=")) {
+            devpath = line.remove("DEVPATH=");
+        } else if (line.startsWith("PRODUCT=")) {
+            product = line.remove("PRODUCT=");
+        }
     }
 
-    qDebug("NIUTAOACTION = %s\n", qPrintable(action_str));
-    qDebug("NIUTAODEV = %s\n",qPrintable(dev));
+    socketBuffer.close();
+
+    idVendor = idProduct = 0;
+    if (!product.isEmpty()) {
+        QStringList list = product.split("/");
+        if (list.length() >= 2) {
+            idVendor = list.at(0).toShort(NULL, 16);
+            idProduct = list.at(1).toShort(NULL, 16);
+        }
+    }
+    qDebug("idVendor = 0x%x, idProduct=0x%x", idVendor, idProduct);
+    emit deviceChanged(idVendor, idProduct, action, devpath, product);
 }

@@ -27,7 +27,7 @@ void SignalTap::setupUi()
 {
     // set the default size of window
     resize(800, 600);
-    setWindowState(Qt::WindowMaximized);
+    //setWindowState(Qt::WindowMaximized);
     QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
     sizePolicy1.setHorizontalStretch(0);
     sizePolicy1.setVerticalStretch(0);
