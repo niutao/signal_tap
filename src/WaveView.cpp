@@ -28,6 +28,8 @@ WaveView::~WaveView()
 
 void WaveView::setupUi()
 {
+    QVBoxLayout *leftVL;
+
     mTab = new WaveTabWidget(this);
 
     QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -40,7 +42,19 @@ void WaveView::setupUi()
     mHL->setSpacing(2);
     mHL->setContentsMargins(0, 0, 0, 0);
 
-    mSignalView = new QTreeView(mTab);
+    leftVL = new QVBoxLayout();
+    leftVL->setSpacing(2);
+
+    mDevices = new QComboBox();
+    QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    sizePolicy3.setHorizontalStretch(0);
+    sizePolicy3.setVerticalStretch(0);
+    sizePolicy3.setHeightForWidth(mDevices->sizePolicy().hasHeightForWidth());
+    mDevices->setSizePolicy(sizePolicy3);
+    mDevices->setMinimumSize(QSize(100, 0));
+    leftVL->addWidget(mDevices);
+
+    mSignalView = new QListView(mTab);
     mSignalView->setEnabled(true);
     QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Expanding);
     sizePolicy2.setHorizontalStretch(0);
@@ -50,7 +64,8 @@ void WaveView::setupUi()
     mSignalView->setMaximumSize(QSize(100, 16777215));
     mSignalView->setBaseSize(QSize(0, 0));
 
-    mHL->addWidget(mSignalView);
+    leftVL->addWidget(mSignalView);
+    mHL->addLayout(leftVL);
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     //waveView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

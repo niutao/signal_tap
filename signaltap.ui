@@ -85,29 +85,49 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTreeView" name="signalView">
-              <property name="enabled">
-               <bool>true</bool>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <property name="spacing">
+               <number>2</number>
               </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
+              <item>
+               <widget class="QComboBox" name="comboBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListView" name="listView">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <widget class="QGraphicsView" name="waveView">
@@ -150,7 +170,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>19</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -262,7 +282,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionFileNew">
    <property name="icon">
-    <iconset resource="signal_tap.qrc">
+    <iconset>
      <normaloff>:/res/images/new.png</normaloff>:/res/images/new.png</iconset>
    </property>
    <property name="text">
@@ -408,7 +428,7 @@
   </action>
   <action name="actionToolBarNew">
    <property name="icon">
-    <iconset resource="signal_tap.qrc">
+    <iconset>
      <normaloff>:/res/images/new.png</normaloff>
      <normalon>res/images/new.png</normalon>
      <activeoff>res/images/new.png</activeoff>
@@ -426,7 +446,7 @@
   </action>
   <action name="actionActionGoBegin">
    <property name="icon">
-    <iconset resource="signal_tap.qrc">
+    <iconset>
      <normaloff>:/res/images/go-first-32.png</normaloff>:/res/images/go-first-32.png</iconset>
    </property>
    <property name="text">

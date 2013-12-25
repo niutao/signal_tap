@@ -30,7 +30,8 @@ public:
     //private fileds for ui
 private:
     QHBoxLayout *mHL;
-    QTreeView *mSignalView;
+    QListView *mSignalView;
+    QComboBox *mDevices;
 
     int mWidth;
     int mHeight;

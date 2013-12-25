@@ -33,7 +33,8 @@ SOURCES += \
     libs/vcd/vcd_header.c \
     libs/vcd/vcd.c \
     usb/st_usb.c \
-    usb/UsbHandler.cpp
+    usb/UsbHandler.cpp \
+    src/UsbManager.cpp
 
 unix: SOURCES += \
     usb/UsbDetector_linux.cpp
@@ -69,7 +70,8 @@ HEADERS  += \
     libs/wlf/wlf_api.h \
     usb/st_usb.h \
     usb/UsbHandler.h \
-    usb/UsbDetector.h
+    usb/UsbDetector.h \
+    src/UsbManager.h
 
 FORMS    += signaltap.ui
 
@@ -82,10 +84,16 @@ OTHER_FILES += \
 
 LIBS += -lz
 
+INCLUDEPATH += \
+    $$PWD/libs/usb \
+    $$PWD/usb
+
+DEPENDPATH += \
+    $$PWD/libs/usb \
+    $$PWD/usb
+
 win32: LIBS += -L$$PWD/libs/usb/ -lusb_win_x86
 
-INCLUDEPATH += $$PWD/libs/usb
-DEPENDPATH += $$PWD/libs/usb
 
 win32: PRE_TARGETDEPS += $$PWD/libs/usb/libusb_win_x86.a
 

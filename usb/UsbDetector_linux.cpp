@@ -169,6 +169,6 @@ void UsbDetector::parseMessage(QByteArray & message)
             idProduct = list.at(1).toShort(NULL, 16);
         }
     }
-    qDebug("idVendor = 0x%x, idProduct=0x%x", idVendor, idProduct);
+
     emit deviceChanged(idVendor, idProduct, action, devpath, product);
 }

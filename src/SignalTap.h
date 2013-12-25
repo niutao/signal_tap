@@ -6,7 +6,6 @@
 #include <QtWidgets>
 #include <QTableWidget>
 #include <QList>
-//#include "WaveView.h"
 
 #define SIGNALTAP_CONTEXT "SignalTap"
 
@@ -14,6 +13,7 @@ class MenuBar;
 class ToolBar;
 class StatusBar;
 class WaveView;
+class UsbManager;
 
 class SignalTap : public QMainWindow
 {
@@ -27,6 +27,9 @@ public:
     bool removeWaveView(WaveView *waveview);
     WaveView *getCurrentWaveView();
 
+    void startSignalTap();
+    void stopSignalTap();
+
 public:
     MenuBar *mMenuBar;
     ToolBar *mToolBar;
@@ -34,6 +37,7 @@ public:
     QHBoxLayout *mTopHL;
     QTabWidget *mTopTab;
     StatusBar *mStatusBar;
+    UsbManager *mUsbManager;
 private:
     QList <WaveView *> mWaveViewList;
     void setupUi();

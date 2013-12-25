@@ -1,6 +1,5 @@
 #include "SignalTap.h"
 #include <QApplication>
-#include "usb/UsbDetector.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,13 +13,11 @@ int main(int argc, char *argv[])
 
     w.show();
 
-    UsbDetector *usb = new UsbDetector();
-
-    usb->startDetector();
+    w.startSignalTap();
 
     a.exec();
 
-    usb->stopDetector();
+    w.stopSignalTap();
 
     return 0;
 }

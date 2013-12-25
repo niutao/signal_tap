@@ -28,7 +28,7 @@ private:
 signals:
     void deviceChanged(uint16_t idVendor, uint16_t idProduct, QString &action,
                        QString &devpath, QString &other);
-public slots:
+private slots:
     void usbDetectorCallback();
 };
 

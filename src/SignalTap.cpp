@@ -10,12 +10,16 @@
 #include "WaveTimeLine.h"
 #include <QSizePolicy>
 #include <QPushButton>
+#include "UsbManager.h"
 
 SignalTap::SignalTap(QWidget *parent) :
     QMainWindow(parent)
 {
     setupUi();
     retranslateUi();
+
+    mWaveViewList.clear();
+    mUsbManager = new UsbManager(this);
 }
 
 SignalTap::~SignalTap()
@@ -76,8 +80,6 @@ void SignalTap::setupUi()
     // create the status bar
     mStatusBar = new StatusBar(this);
     setStatusBar(mStatusBar);
-
-    mWaveViewList.clear();
 }
 
 void SignalTap::retranslateUi()
@@ -175,3 +177,12 @@ WaveView *SignalTap::getCurrentWaveView()
     return widget->getWaveView();
 }
 
+void SignalTap::startSignalTap()
+{
+    mUsbManager->startUsbManager();
+}
+
+void SignalTap::stopSignalTap()
+{
+    mUsbManager->stopUsbManager();
+}
