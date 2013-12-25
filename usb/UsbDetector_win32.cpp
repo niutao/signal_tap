@@ -42,7 +42,9 @@ static void UpdateDevice(PDEV_BROADCAST_DEVICEINTERFACE pDevInf, WPARAM wParam)
 
     char buffer[128];
     lstrcpyA(buffer, (char *)pDevInf->dbcc_name);
-
+    // we just care the message of usb device
+    if (strstr(buffer, "USB#") == NULL)
+        return;
     qDebug("INFO = %s", buffer);
 #if 0
     DWORD dwFlag = DBT_DEVICEARRIVAL != wParam
@@ -143,13 +145,13 @@ bool UsbDetector::init()
                          0, NULL, GetModuleHandle(NULL));
     SetWindowLongA(mHWND, GWL_WNDPROC, (LONG)_usbDetectorCallback);
     //usb volume
-    GUID interfaceGUID={0xA5DCBF10, 0x6530, 0x11D2,
+    GUID GUID_CLASS_USB_DEVICE={0xA5DCBF10, 0x6530, 0x11D2,
                         {0x90, 0x1F, 0x00, 0xC0, 0x4F, 0xB9, 0x51, 0xED}};
     ZeroMemory(&NotificationFilter, sizeof(NotificationFilter));
 
     NotificationFilter.dbcc_size = sizeof(DEV_BROADCAST_DEVICEINTERFACE);
     NotificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
-    NotificationFilter.dbcc_classguid = interfaceGUID;
+    NotificationFilter.dbcc_classguid = GUID_CLASS_USB_DEVICE;
 
     mDevNotify = RegisterDeviceNotification(mHWND,
                     &NotificationFilter, DEVICE_NOTIFY_WINDOW_HANDLE);

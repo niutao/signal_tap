@@ -5,6 +5,10 @@
 #include <QThread>
 #include <QBuffer>
 #include <stdint.h>
+#if defined(Q_OS_LINUX)
+#elif defined(Q_OS_WIN32)
+#include <windows.h>
+#endif
 
 class UsbDetector : public QObject
 {
@@ -16,12 +20,13 @@ public:
     bool stopDetector();
 private:
     bool init();
+#if defined(Q_OS_LINUX)
     int mNetLinkSocket;
-#ifdef Q_OS_LINUX
     class QSocketNotifier *mSocketNotifier;
     void parseMessage(QByteArray& message);
-#elif Q_OS_WIN32
-    HWND hwnd;
+#elif defined(Q_OS_WIN32)
+    HWND mHWND;
+    HDEVNOTIFY mDevNotify;
 #else
 #error "please add the platform support"
 #endif
