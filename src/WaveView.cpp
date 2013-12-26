@@ -6,6 +6,8 @@
 #include <QScrollBar>
 #include <QTabBar>
 #include "WaveShow.h"
+#include "UsbManager.h"
+#include "UsbHandler.h"
 
 WaveView::WaveView(SignalTap *st, QString *waveName):
     QGraphicsView(st)
@@ -17,6 +19,7 @@ WaveView::WaveView(SignalTap *st, QString *waveName):
     mWidth = this->width();
     mHeight = this->height();
     mWaveName = waveName;
+    mUsbHander = new UsbHandler();
 
     connect(mCloseButton, SIGNAL(clicked()), this, SLOT(onCloseButtonClicked()));
 }
@@ -143,6 +146,8 @@ void WaveView::resizeEvent(QResizeEvent *event)
 void WaveView::onCloseButtonClicked()
 {
     mST->removeWaveView(this);
+    this->disconnect();
+    delete this;
 }
 
 bool WaveView::openWave(QString &wave)
@@ -153,6 +158,26 @@ bool WaveView::openWave(QString &wave)
     return true;
 }
 
+void WaveView::deviceAdded(UsbDeviceInfo *usb)
+{
+    mDevices->addItem(usb->mName);
+    qDebug("add %s", qPrintable(usb->mName));
+}
+
+void WaveView::deviceRemoved(UsbDeviceInfo *usb)
+{
+    UsbDeviceInfo *info = mST->mUsbManager->findDevice(mDevices->currentText());
+    if (info)
+        qDebug("0x%x, 0x%x", info->mIdVendor, info->mIdProduct);
+    mDevices->removeItem(mDevices->findText(usb->mName));
+
+    qDebug("remove %s", qPrintable(usb->mName));
+}
+
+void WaveView::startCapture()
+{
+
+}
 
 WaveTabWidget::WaveTabWidget(WaveView *waveview)
 {

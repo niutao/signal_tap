@@ -8,6 +8,8 @@
 #include <QList>
 
 #define SIGNALTAP_CONTEXT "SignalTap"
+#define SIGNALTAP_DEVICE_MANUFACTURER "SAS"
+#define SIGNALTAP_DEVICE_PRODUCT "SIGNAL ANALYZE SYSTEM"
 
 class MenuBar;
 class ToolBar;

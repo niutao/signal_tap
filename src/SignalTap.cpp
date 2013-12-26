@@ -158,6 +158,11 @@ WaveView *SignalTap::addWaveView(QString &wave)
 
     waveview->openWave(wave);
 
+    connect(mUsbManager, SIGNAL(deviceAdded(UsbDeviceInfo*)),
+            waveview, SLOT(deviceAdded(UsbDeviceInfo*)));
+    connect(mUsbManager, SIGNAL(deviceRemoved(UsbDeviceInfo*)),
+            waveview, SLOT(deviceRemoved(UsbDeviceInfo*)));
+
     return waveview;
 }
 WaveView *SignalTap::addWaveView()

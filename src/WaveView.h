@@ -15,6 +15,8 @@
 class WaveShow;
 class SignalTap;
 class WaveTabWidget;
+class UsbDeviceInfo;
+class UsbHandler;
 
 class WaveView : public QGraphicsView
 {
@@ -32,6 +34,7 @@ private:
     QHBoxLayout *mHL;
     QListView *mSignalView;
     QComboBox *mDevices;
+    UsbHandler *mUsbHander;
 
     int mWidth;
     int mHeight;
@@ -50,7 +53,8 @@ signals:
 
 public slots:
     void onCloseButtonClicked();
-
+    void deviceAdded(UsbDeviceInfo *usb);
+    void deviceRemoved(UsbDeviceInfo *usb);
 };
 
 class WaveTabWidget: public QWidget

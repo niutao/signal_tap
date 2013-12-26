@@ -75,7 +75,6 @@ bool UsbDetector::init()
         mNetLinkSocket = -1;
         return false;
     } else if (retval == 0) {
-        //from libudev-monitor.c
         struct sockaddr_nl _snl;
         socklen_t _addrlen;
 
