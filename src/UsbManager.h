@@ -3,8 +3,12 @@
 
 #include <stdint.h>
 #include <QObject>
-#include "UsbDetector.h"
-#include "UsbHandler.h"
+
+#define SAS_DEVICE_VENDOR 0x04b4
+#define SAS_DEVICE_PRODUCT 0x4001
+
+class UsbDetector;
+class UsbHandler;
 
 class UsbDeviceInfo
 {
@@ -33,6 +37,8 @@ public:
 private:
     UsbDetector *mUsbDetector;
     QList <UsbDeviceInfo *> mUsbDevieList;
+public:
+    QList <UsbDeviceInfo *> & getDeviceList() { return mUsbDevieList; }
 signals:
     void deviceAdded(UsbDeviceInfo *device);
     void deviceRemoved(UsbDeviceInfo *device);

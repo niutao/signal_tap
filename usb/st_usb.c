@@ -100,7 +100,7 @@ int st_usb_open(struct st_usb *stu)
 	stu->handle = usb_open(stu->dev);
 	if (!stu->handle) {
 		perror("can not open the usb device");
-		return -EIO;
+        return -errno;
 	}
 
 	if (usb_claim_interface(stu->handle, 0) != 0) {

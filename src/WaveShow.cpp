@@ -1,4 +1,5 @@
 #include <errno.h>
+#include "MenuCapture.h"
 #include "WaveShow.h"
 #include "WaveView.h"
 #include "MenuBar.h"

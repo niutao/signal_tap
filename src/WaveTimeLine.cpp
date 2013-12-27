@@ -1,4 +1,5 @@
 //#define QT_NO_DEBUG_OUTPUT
+#include "MenuCapture.h"
 #include "WaveTimeLine.h"
 #include "WaveView.h"
 #include "WaveShow.h"

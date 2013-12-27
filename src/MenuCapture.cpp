@@ -87,15 +87,24 @@ void MenuCapture::onStartTriggered()
 
     waveview = mST->getCurrentWaveView();
 
-    if (waveview == NULL)
+    if (waveview == NULL) {
         waveview = mST->addWaveView();
+    }
 
-
+    waveview->startCapture();
 }
 
 
 void MenuCapture::onStopTriggered()
 {
+    WaveView *waveview;
+
+    waveview = mST->getCurrentWaveView();
+
+    if (waveview == NULL)
+        return;
+
+    waveview->stopCapture();
 }
 
 
@@ -118,3 +127,18 @@ void MenuCapture::onTriggerTriggered()
 {
 }
 
+void MenuCapture::setMenuEnable(Menber menber, bool state)
+{
+    QAction *menu;
+
+    switch (menber) {
+    case Start:
+        menu = mStart;
+        break;
+    case Stop:
+        menu = mStop;
+        break;
+    }
+
+    menu->setEnabled(state);
+}

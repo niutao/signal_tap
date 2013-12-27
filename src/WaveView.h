@@ -11,6 +11,7 @@
 #include <QGraphicsView>
 #include <QTabBar>
 #include <QPushButton>
+#include <QThread>
 
 class WaveShow;
 class SignalTap;
@@ -22,7 +23,8 @@ class WaveView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    WaveView(SignalTap *st, QString *waveName = 0);
+    WaveView(SignalTap *st);
+    WaveView(SignalTap *st, QString waveName);
     ~WaveView();
     WaveTabWidget *mTab;
     WaveShow *mWaveShow;
@@ -34,13 +36,14 @@ private:
     QHBoxLayout *mHL;
     QListView *mSignalView;
     QComboBox *mDevices;
-    UsbHandler *mUsbHander;
+    UsbHandler *mUsbHandler;
 
     int mWidth;
     int mHeight;
     void setupUi();
     void desetupUi();
     void retranslateUi();
+    void init(SignalTap *st);
 protected:
     void resizeEvent(QResizeEvent *event);
 
@@ -48,13 +51,21 @@ public:
     int getWidth();
     int getHeight();
     bool openWave(QString &wave);
+    void addDeviceList(QList <UsbDeviceInfo *> devices);
 signals:
     void onSceneRectChangedEvent(const QRectF & rect);
-
 public slots:
     void onCloseButtonClicked();
     void deviceAdded(UsbDeviceInfo *usb);
     void deviceRemoved(UsbDeviceInfo *usb);
+    void startCapture();
+    void stopCapture();
+
+    void dataValid();
+    void deviceInValid();
+    void dataError();
+    void errorFound(int error);
+    void dataSaved();
 };
 
 class WaveTabWidget: public QWidget

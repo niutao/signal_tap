@@ -18,6 +18,7 @@ public:
 public:
     QAction *mStart;
     QAction *mStop;
+    enum Menber{Start, Stop};
 private:
     SignalTap *mST;
 
@@ -39,6 +40,8 @@ public slots:
     void onSetupTriggered();
     void onSamplingTriggered();
     void onTriggerTriggered();
+
+    void setMenuEnable(Menber menber, bool state);
 };
 
 #endif // MENUEDIT_H

@@ -2,16 +2,27 @@
 #define USBHANDLER_H
 
 #include <QObject>
+#include <QThread>
+#include <QString>
 #include <stdint.h>
 #include "st_usb.h"
+/** start to capture the signal */
+#define ST_CMD_START_CAP    0xD2
+/** stop to capture the signal */
+#define ST_CMD_STOP_CAP     0xD3
+/** start to output the signal */
+#define ST_CMD_START_OUT    0xD4
+/** stop to output the signal */
+#define ST_CMD_STOP_OUT     0xD5
 
-class UsbHandler : public QObject
+class UsbHandler : public QThread
 {
     Q_OBJECT
 public:
     explicit UsbHandler(QObject *parent = 0);
     explicit UsbHandler(uint16_t idVendor, uint16_t idProduct, int sampleRate);
     ~UsbHandler();
+    void run();
 
     /**
      * @brief State the state machine of usb port
@@ -23,8 +34,10 @@ public:
         OPENED,
         //! there is a progress readding data from usb port
         READING,
+        STOPREADING,
         //! there is a progress writing data to usb port
-        WRITING
+        WRITING,
+        STOPWRITING,
     };
 private:
     //! the handler of usb device
@@ -46,9 +59,16 @@ private:
 
     uint16_t mIdVendor;
     uint16_t mIdProduct;
+    QString mSavedName;
+    int mReadEndPoint;
+    int mWriteEndPoint;
 public:
     //! get hte used time
     int getUsedTime() { return mUsedTime; }
+    void setState(State state) { mState = state; }
+    void setSavedName(QString *name) {mSavedName = *name; }
+    void setReadEndPoint(int endpoint) { mReadEndPoint = endpoint; }
+    void setWriteEndPoint(int endpoint) { mWriteEndPoint = endpoint; }
     /**
      * @brief openDevice
      *        open the usb device
@@ -78,7 +98,11 @@ public:
     int readRawData(int endpoint, char *data, int size, int timeout);
     int writeRawData(int endpoint, char *data, int size, int timeout);
 signals:
-
+    void dataValid();
+    void deviceInValid();
+    void dataError();
+    void errorFound(int error);
+    void dataSaved();
 public slots:
 
 };

@@ -1,9 +1,12 @@
 #include "UsbHandler.h"
 #include "st_usb.h"
 #include <errno.h>
+#include <QFile>
+#include <QTextStream>
+#include <QDataStream>
 
 UsbHandler::UsbHandler(QObject *parent) :
-    QObject(parent)
+    QThread(parent)
 {
     mDevice = NULL;
     mSampleRate = 0;
@@ -103,12 +106,10 @@ int UsbHandler::readRawData(int endpoint, char *data, int size, int timeout)
 {
     int ret;
 
-    if (mState == CLOSED)
+    if (mState != READING && mState != STOPREADING)
         return -EPIPE;
 
-    mState = READING;
     ret = st_usb_bulk_read(mDevice, endpoint, data, size, timeout);
-    mState = OPENED;
 
     return ret;
 }
@@ -117,12 +118,64 @@ int UsbHandler::writeRawData(int endpoint, char *data, int size, int timeout)
 {
     int ret;
 
-    if (mState == CLOSED)
+    if (mState != WRITING && mState != STOPWRITING)
         return -EPIPE;
 
-    mState = WRITING;
     ret = st_usb_bulk_write(mDevice, endpoint, data, size, timeout);
-    mState = OPENED;
 
     return ret;
+}
+
+void UsbHandler::run()
+{
+    bool datavalid = false;
+#define USB_BUFFER_SIZE (512 * 4)
+    char buffer[USB_BUFFER_SIZE];
+    int ret = 1;
+
+    QFile raw_data("/tmp/" + mSavedName);
+    qDebug("RawFileName = %s", qPrintable(raw_data.fileName()));
+    qDebug("mReadEndPoint = 0x%x", mReadEndPoint);
+    if (!raw_data.open(QIODevice::WriteOnly)) {
+        emit errorFound(-ENOENT);
+        return;
+    }
+    QDataStream raw(&raw_data);
+
+    while (ret > 0) {
+        switch (mState) {
+        case READING:
+        case STOPREADING:
+            //qDebug("Start read");
+            ret = readRawData(mReadEndPoint, buffer, USB_BUFFER_SIZE, USB_CTRL_SET_TIMEOUT);
+            //qDebug("Read %d bytes", ret);
+            if (ret < 0 && mState == READING) {
+                emit dataError();
+                continue;
+            }
+
+            if (ret == 0 || mState == STOPREADING) {
+                emit dataSaved();
+                ret = 0;
+                continue;
+            }
+
+            if (!datavalid) {
+                emit dataValid();
+                datavalid = true;
+            }
+            raw.writeRawData(buffer, ret);
+            break;
+        case WRITING:
+        case STOPWRITING:
+            break;
+        default:
+            ret = 0;
+            break;
+        }
+    }
+
+    mState = OPENED;
+    qDebug("end usb handler thread");
+    raw_data.close();
 }

@@ -18,6 +18,7 @@ public:
     ~UsbDetector();
     bool startDetector();
     bool stopDetector();
+    void scanDevices(uint16_t idVendor, uint16_t idProduct);
 private:
     bool init();
 #if defined(Q_OS_LINUX)

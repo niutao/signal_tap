@@ -4,13 +4,17 @@
 #include "WaveTimeLine.h"
 #include <QGraphicsItem>
 #include <QScrollBar>
+#include <QMessageBox>
 #include <QTabBar>
 #include "WaveShow.h"
 #include "UsbManager.h"
 #include "UsbHandler.h"
+#include "MenuBar.h"
+#include "MenuCapture.h"
+#include "st_usb.h"
+#define DEFAULT_DEVICE "None"
 
-WaveView::WaveView(SignalTap *st, QString *waveName):
-    QGraphicsView(st)
+void WaveView::init(SignalTap *st)
 {
     mST = st;
     setupUi();
@@ -18,15 +22,36 @@ WaveView::WaveView(SignalTap *st, QString *waveName):
 
     mWidth = this->width();
     mHeight = this->height();
-    mWaveName = waveName;
-    mUsbHander = new UsbHandler();
+    mUsbHandler = new UsbHandler();
 
     connect(mCloseButton, SIGNAL(clicked()), this, SLOT(onCloseButtonClicked()));
+    connect(mUsbHandler, SIGNAL(dataValid()), this, SLOT(dataValid()));
+    connect(mUsbHandler, SIGNAL(deviceInValid()), this, SLOT(deviceInValid()));
+    connect(mUsbHandler, SIGNAL(dataError()), this, SLOT(dataError()));
+    connect(mUsbHandler, SIGNAL(errorFound(int)), this, SLOT(errorFound(int)));
+    connect(mUsbHandler, SIGNAL(dataSaved()), this, SLOT(dataSaved()));
+
+    mDevices->addItem(DEFAULT_DEVICE);
+    mDevices->setCurrentIndex(0);
+}
+
+WaveView::WaveView(SignalTap *st):
+    QGraphicsView(st)
+{
+    mWaveName = new QString();
+    init(st);
+}
+WaveView::WaveView(SignalTap *st, QString waveName):
+    QGraphicsView(st)
+{
+    mWaveName = new QString(waveName);
+    init(st);
 }
 
 WaveView::~WaveView()
 {
     desetupUi();
+    delete mWaveName;
 }
 
 void WaveView::setupUi()
@@ -152,10 +177,16 @@ void WaveView::onCloseButtonClicked()
 
 bool WaveView::openWave(QString &wave)
 {
-    mWaveShow->drawTest();
+    //mWaveShow->drawTest();
     horizontalScrollBar()->setSliderPosition(0);
 
     return true;
+}
+void WaveView::addDeviceList(QList <UsbDeviceInfo *> devices)
+{
+    foreach (UsbDeviceInfo *device, devices) {
+        mDevices->addItem(device->mName);
+    }
 }
 
 void WaveView::deviceAdded(UsbDeviceInfo *usb)
@@ -166,9 +197,6 @@ void WaveView::deviceAdded(UsbDeviceInfo *usb)
 
 void WaveView::deviceRemoved(UsbDeviceInfo *usb)
 {
-    UsbDeviceInfo *info = mST->mUsbManager->findDevice(mDevices->currentText());
-    if (info)
-        qDebug("0x%x, 0x%x", info->mIdVendor, info->mIdProduct);
     mDevices->removeItem(mDevices->findText(usb->mName));
 
     qDebug("remove %s", qPrintable(usb->mName));
@@ -176,8 +204,72 @@ void WaveView::deviceRemoved(UsbDeviceInfo *usb)
 
 void WaveView::startCapture()
 {
+    UsbDeviceInfo *device = mST->mUsbManager->findDevice(mDevices->currentText());
+    if (!device) {
+        QMessageBox message(QMessageBox::Warning,
+                            "Error",
+                            "No device found!",
+                            QMessageBox::Yes, this);
+        message.exec();
+        return;
+    }
 
+    int ret = mUsbHandler->openDevice(device->mIdVendor, device->mIdProduct);
+    if (ret != 0) {
+        QMessageBox message(QMessageBox::Information,
+                            "Information",
+                            strerror(-ret),
+                            QMessageBox::Yes, this);
+        message.exec();
+        return;
+    }
+    mUsbHandler->setSavedName(mWaveName);
+    mUsbHandler->setReadEndPoint(0x86);
+    mUsbHandler->setState(UsbHandler::READING);
+    mUsbHandler->sendCtlMsg(ST_CMD_START_CAP, 0x0, NULL, 0, USB_CTRL_GET_TIMEOUT);
+    mUsbHandler->start();
+    mST->mMenuBar->mMenuCapture->setMenuEnable(MenuCapture::Start, false);
+    mST->mMenuBar->mMenuCapture->setMenuEnable(MenuCapture::Stop, true);
 }
+
+void WaveView::stopCapture()
+{
+    mUsbHandler->sendCtlMsg(ST_CMD_STOP_CAP, 0x0, NULL, 0, USB_CTRL_SET_TIMEOUT);
+    mUsbHandler->setState(UsbHandler::STOPREADING);
+    mST->mMenuBar->mMenuCapture->setMenuEnable(MenuCapture::Start, true);
+    mST->mMenuBar->mMenuCapture->setMenuEnable(MenuCapture::Stop, false);
+}
+
+void WaveView::dataValid()
+{
+    qDebug("dataValid");
+}
+
+
+void WaveView::deviceInValid()
+{
+    qDebug("deviceInValid");
+}
+
+
+void WaveView::dataError()
+{
+    qDebug("dataError");
+}
+
+
+void WaveView::errorFound(int error)
+{
+    qDebug("errorFound");
+}
+
+
+void WaveView::dataSaved()
+{
+    qDebug("dataSaved");
+}
+
+
 
 WaveTabWidget::WaveTabWidget(WaveView *waveview)
 {

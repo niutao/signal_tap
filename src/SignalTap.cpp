@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <libgen.h>
+#include "MenuCapture.h"
 #include "WaveView.h"
 #include "MenuBar.h"
 #include "ToolBar.h"
@@ -147,7 +148,7 @@ WaveView *SignalTap::addWaveView(QString &wave)
 
     qDebug("%s\n",(const char *) wave.toLocal8Bit());
 
-    waveview = new WaveView(this);
+    waveview = new WaveView(this, wave);
 
     int index = mTopTab->addTab(waveview->mTab, basename(wave.toLatin1().data()));
     mTopTab->tabBar()->setTabButton(index, QTabBar::RightSide, waveview->mCloseButton);
@@ -162,6 +163,8 @@ WaveView *SignalTap::addWaveView(QString &wave)
             waveview, SLOT(deviceAdded(UsbDeviceInfo*)));
     connect(mUsbManager, SIGNAL(deviceRemoved(UsbDeviceInfo*)),
             waveview, SLOT(deviceRemoved(UsbDeviceInfo*)));
+
+    waveview->addDeviceList(mUsbManager->getDeviceList());
 
     return waveview;
 }

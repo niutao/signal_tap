@@ -10,6 +10,7 @@
 #include <linux/netlink.h>
 #include <errno.h>
 #include <unistd.h>
+#include <usb.h>
 
 #include <QtCore>
 
@@ -170,4 +171,28 @@ void UsbDetector::parseMessage(QByteArray & message)
     }
 
     emit deviceChanged(idVendor, idProduct, action, devpath, product);
+}
+
+void UsbDetector::scanDevices(uint16_t idVendor, uint16_t idProduct)
+{
+    struct usb_bus *bus;
+    struct usb_device *dev;
+
+    usb_init();
+    usb_find_busses();
+    usb_find_devices();
+
+    for (bus = usb_busses; bus; bus = bus->next) {
+        for (dev = bus->devices; dev; dev = dev->next) {
+            if (!dev->config) {
+                fprintf(stderr, " Couldn't retrieve descriptors\n");
+                continue;
+            }
+
+            if (dev->descriptor.idVendor == idVendor &&
+                    dev->descriptor.idProduct == idProduct) {
+                qDebug("filename = %s %s", dev->filename, dev->bus->dirname);
+            }
+        }
+    }
 }

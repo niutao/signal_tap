@@ -1,6 +1,7 @@
 #include "MenuEdit.h"
 #include "SignalTap.h"
 #include "MenuBar.h"
+#include "MenuCapture.h"
 #include "WaveView.h"
 #include "WaveShow.h"
 

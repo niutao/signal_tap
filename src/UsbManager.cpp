@@ -2,6 +2,8 @@
 #include <QFile>
 #include <QTextStream>
 #include "SignalTap.h"
+#include "UsbDetector.h"
+#include "UsbHandler.h"
 
 UsbManager::UsbManager(QObject *parent) :
     QObject(parent)
@@ -23,6 +25,9 @@ void UsbManager::deviceChanged(uint16_t idVendor, uint16_t idProduct,
                                QString &action, QString &devpath, QString &other)
 {
     UsbDeviceInfo *found = NULL;
+
+    if (idVendor != SAS_DEVICE_VENDOR || idProduct != SAS_DEVICE_PRODUCT)
+        return;
 
     QFile manufacturer("/sys" + devpath + "/manufacturer");
     if (manufacturer.open(QIODevice::ReadOnly)) {
@@ -66,7 +71,10 @@ UsbDeviceInfo *UsbManager::findDevice(QString name)
 
 bool UsbManager::startUsbManager()
 {
-    return mUsbDetector->startDetector();
+    int ret;
+    ret = mUsbDetector->startDetector();
+    mUsbDetector->scanDevices(SAS_DEVICE_VENDOR, SAS_DEVICE_PRODUCT);
+    return ret ? false : true;
 }
 
 void UsbManager::stopUsbManager()
