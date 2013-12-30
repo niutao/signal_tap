@@ -12,8 +12,9 @@ UsbManager::UsbManager(QObject *parent) :
 
     mUsbDevieList.clear();
 
-    connect(mUsbDetector, SIGNAL(deviceChanged(uint16_t,uint16_t,QString&,QString&,QString&)),
-            this, SLOT(deviceChanged(uint16_t,uint16_t,QString&,QString&,QString&)));
+    connect(mUsbDetector,
+            SIGNAL(deviceChanged(uint16_t,uint16_t,QString,QString,QString)),
+            this, SLOT(deviceChanged(uint16_t,uint16_t,QString ,QString,QString)));
 }
 UsbManager::~UsbManager()
 {
@@ -22,7 +23,7 @@ UsbManager::~UsbManager()
 }
 
 void UsbManager::deviceChanged(uint16_t idVendor, uint16_t idProduct,
-                               QString &action, QString &devpath, QString &other)
+                               QString action, QString devpath, QString devname)
 {
     UsbDeviceInfo *found = NULL;
 
@@ -42,7 +43,7 @@ void UsbManager::deviceChanged(uint16_t idVendor, uint16_t idProduct,
     foreach (UsbDeviceInfo *device, mUsbDevieList) {
         if (device->mIdVendor == idVendor &&
                 device->mIdProduct == idProduct &&
-                device->mDevPath.compare(devpath) == 0) {
+                device->mDevName.compare(devname) == 0) {
             found = device;
         }
     }
@@ -50,7 +51,7 @@ void UsbManager::deviceChanged(uint16_t idVendor, uint16_t idProduct,
     // there is a new device has been found, add it to list
     if (action.compare("add") == 0 && !found) {
         UsbDeviceInfo *usb = new UsbDeviceInfo();
-        usb->init(idVendor, idProduct, devpath, other);
+        usb->init(idVendor, idProduct, devpath, devname);
         mUsbDevieList.append(usb);
         emit deviceAdded(usb);
     } else if (action.compare("remove") == 0 && found) {
@@ -72,8 +73,10 @@ UsbDeviceInfo *UsbManager::findDevice(QString name)
 bool UsbManager::startUsbManager()
 {
     int ret;
+
     ret = mUsbDetector->startDetector();
     mUsbDetector->scanDevices(SAS_DEVICE_VENDOR, SAS_DEVICE_PRODUCT);
+
     return ret ? false : true;
 }
 
@@ -88,12 +91,12 @@ UsbDeviceInfo::UsbDeviceInfo()
 }
 
 void UsbDeviceInfo::init(uint16_t idVendor, uint16_t idProduct,
-                         QString &devpath, QString &other)
+                         QString devpath, QString devname)
 {
     mIdVendor = idVendor;
     mIdProduct = idProduct;
     mDevPath = devpath;
-    mProduct = other;
+    mDevName = devname;
     mName = QString(SIGNALTAP_DEVICE_MANUFACTURER) + " " +
             devpath.mid(devpath.lastIndexOf("/", -1) + 1);
 }

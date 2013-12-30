@@ -15,12 +15,13 @@ class UsbDeviceInfo
 public:
     explicit UsbDeviceInfo();
     void init(uint16_t idVendor, uint16_t idProduct,
-                             QString &devpath, QString &other);
+                             QString devpath, QString devname);
     uint16_t mIdVendor;
     uint16_t mIdProduct;
     QString mDevPath;
     QString mProduct;
     QString mName;
+    QString mDevName;
 };
 
 class UsbManager : public QObject
@@ -43,8 +44,8 @@ signals:
     void deviceAdded(UsbDeviceInfo *device);
     void deviceRemoved(UsbDeviceInfo *device);
 public slots:
-    void deviceChanged(uint16_t idVendor, uint16_t idProduct, QString &action,
-                       QString &devpath, QString &other);
+    void deviceChanged(uint16_t idVendor, uint16_t idProduct, QString action,
+                       QString devpath, QString devname);
 };
 
 #endif // USBMANAGER_H

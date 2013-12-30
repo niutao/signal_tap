@@ -32,8 +32,8 @@ private:
 #error "please add the platform support"
 #endif
 signals:
-    void deviceChanged(uint16_t idVendor, uint16_t idProduct, QString &action,
-                       QString &devpath, QString &other);
+    void deviceChanged(uint16_t idVendor, uint16_t idProduct, QString action,
+                       QString devpath, QString devname);
 private slots:
     void usbDetectorCallback();
 };

@@ -136,7 +136,7 @@ void UsbDetector::parseMessage(QByteArray & message)
 {
     QBuffer socketBuffer;
     QString line;
-    QString  action, devpath, product;
+    QString  action, devpath, product, devname;
     uint16_t idVendor, idProduct;
 
     // we only care the action of usb device, so if the message if not contain
@@ -144,6 +144,7 @@ void UsbDetector::parseMessage(QByteArray & message)
     if (!message.contains("DEVTYPE=usb_device"))
         return;
 
+    qDebug("message:\n%s", message.constData());
     socketBuffer.setBuffer(&message);
     socketBuffer.open(QIODevice::ReadOnly);
 
@@ -156,6 +157,8 @@ void UsbDetector::parseMessage(QByteArray & message)
             devpath = line.remove("DEVPATH=");
         } else if (line.startsWith("PRODUCT=")) {
             product = line.remove("PRODUCT=");
+        } else if (line.startsWith("DEVNAME=")) {
+            devname = line.remove("DEVNAME=");
         }
     }
 
@@ -170,7 +173,7 @@ void UsbDetector::parseMessage(QByteArray & message)
         }
     }
 
-    emit deviceChanged(idVendor, idProduct, action, devpath, product);
+    emit deviceChanged(idVendor, idProduct, action, devpath, devname);
 }
 
 void UsbDetector::scanDevices(uint16_t idVendor, uint16_t idProduct)
